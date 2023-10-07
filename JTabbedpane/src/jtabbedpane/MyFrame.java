@@ -121,8 +121,12 @@ public class MyFrame extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Мониторинг подсистем TANGO");
@@ -173,6 +177,7 @@ public class MyFrame extends javax.swing.JFrame {
         });
 
         jButton3.setText("Переименовать подсистему");
+        jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -184,32 +189,41 @@ public class MyFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(560, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3)))
-                .addGap(40, 40, 40))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addGap(43, 43, 43))
         );
 
         jTabbedPane1.addTab("Сводка", jPanel1);
 
         jMenu1.setText("Файл");
+
+        jMenuItem2.setText("Открыть конфигурацию");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
 
         jMenuItem1.setText("Сохранить конфигурацию");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -219,15 +233,30 @@ public class MyFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Загрузить конфигурацию");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.setText("Сохранить конфигурацию как");
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setText("Выход");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Параметры");
+
+        jMenuItem5.setText("Интервал обновления");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -311,10 +340,56 @@ public class MyFrame extends javax.swing.JFrame {
         }
 
         logger.log(Level.INFO, "Подсистема была переименована с '"
-                + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
+            + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
         ((Configurations) this.conflist.get(this.rowindex)).title = nm;
         this.jTabbedPane1.setTitleAt(this.rowindex + 1, nm);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        int interval;
+        String input = JOptionPane.showInputDialog(this, "Введите интервал времени в секундах:",
+                Integer.valueOf(deviceCheckInterval));
+
+        if (input == null) {
+            return;
+        }
+
+        if (input.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Пустой ввод не допускается. Пожалуйста, введите интервал времени.");
+
+            return;
+        }
+
+        try {
+            interval = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Неверный формат ввода. Пожалуйста, введите целое число.");
+            jMenuItem5ActionPerformed(evt);
+
+            return;
+        }
+        if (interval <= 0) {
+            JOptionPane.showMessageDialog(this, "Интервал времени должен быть положительным числом.");
+            jMenuItem5ActionPerformed(evt);
+
+            return;
+        }
+        deviceCheckInterval = interval;
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        if (this.currentFile == null || this.conflist.isEmpty() || !this.conflist_check.equals(this.conflist)) {
+            int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
+                    "Подтверждение сохранения", 1);
+            if (option == 0) {
+                jMenuItem1ActionPerformed((ActionEvent) null);
+            } else if (option == 2) {
+                return;
+            }
+        }
+        scheduler.shutdown();
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     protected void processWindowEvent(WindowEvent we) {
         if (we.getID() == 201) {
@@ -468,20 +543,6 @@ public class MyFrame extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_jButton2ActionPerformed
 
-    private void jMenuItem4ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jMenuItem4ActionPerformed
-        if (this.currentFile == null || this.conflist.isEmpty() || !this.conflist_check.equals(this.conflist)) {
-            int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
-                    "Подтверждение сохранения", 1);
-            if (option == 0) {
-                jMenuItem1ActionPerformed((ActionEvent) null);
-            } else if (option == 2) {
-                return;
-            }
-        }
-        scheduler.shutdown();
-        System.exit(0);
-    }// GEN-LAST:event_jMenuItem4ActionPerformed
-
     private void jMenuItem3ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jMenuItem3ActionPerformed
         JFileChooser fileChooser = new JFileChooser(".");
 
@@ -539,39 +600,6 @@ public class MyFrame extends javax.swing.JFrame {
             }
         }
     }// GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem5ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jMenuItem5ActionPerformed
-        int interval;
-        String input = JOptionPane.showInputDialog(this, "Введите интервал времени в секундах:",
-                Integer.valueOf(deviceCheckInterval));
-
-        if (input == null) {
-            return;
-        }
-
-        if (input.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Пустой ввод не допускается. Пожалуйста, введите интервал времени.");
-
-            return;
-        }
-
-        try {
-            interval = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Неверный формат ввода. Пожалуйста, введите целое число.");
-            jMenuItem5ActionPerformed(evt);
-
-            return;
-        }
-        if (interval <= 0) {
-            JOptionPane.showMessageDialog(this, "Интервал времени должен быть положительным числом.");
-            jMenuItem5ActionPerformed(evt);
-
-            return;
-        }
-        deviceCheckInterval = interval;
-    }// GEN-LAST:event_jMenuItem5ActionPerformed
-
 
     public void OpenWasClicked() {
         this.model = new ArrayList<>();
@@ -641,9 +669,13 @@ public class MyFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private static javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTabbedPane jTabbedPane1;

@@ -234,6 +234,11 @@ public class MyFrame extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem3.setText("Сохранить конфигурацию как");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Выход");
@@ -391,6 +396,64 @@ public class MyFrame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        JFileChooser fileChooser = new JFileChooser(".");
+
+        fileChooser.setFileFilter(new FileFilter() {
+            public boolean accept(File f) {
+                if (f.getName().endsWith("json") || f.isDirectory()) {
+                    return true;
+                }
+                return false;
+            }
+
+            public String getDescription() {
+                return "Only JSON";
+            }
+        });
+        int option = fileChooser.showSaveDialog(this);
+        if (option == 0) {
+            File file;
+            if (fileChooser.getSelectedFile().getAbsolutePath().endsWith("json")) {
+                file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+            } else {
+                file = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".json");
+            }
+
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+
+                logger.log(Level.SEVERE, (Supplier<String>) ex);
+            }
+
+            Gson gson = new Gson();
+
+            Writer writer = null;
+            try {
+                writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath(), new String[0]),
+                        new java.nio.file.OpenOption[0]);
+            } catch (IOException ex) {
+
+                logger.log(Level.SEVERE, (Supplier<String>) ex);
+            }
+
+            gson.toJson(this.conflist, writer);
+
+            try {
+                writer.close();
+            } catch (IOException ex) {
+
+                logger.log(Level.SEVERE, (Supplier<String>) ex);
+            }
+
+            this.conflist_check = new ArrayList<>();
+            for (Configurations config : this.conflist) {
+                this.conflist_check.add(config.clone());
+            }
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     protected void processWindowEvent(WindowEvent we) {
         if (we.getID() == 201) {
             if (this.conflist.isEmpty() && this.conflist_check.isEmpty()) {
@@ -542,64 +605,6 @@ public class MyFrame extends javax.swing.JFrame {
             return;
         }
     }// GEN-LAST:event_jButton2ActionPerformed
-
-    private void jMenuItem3ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jMenuItem3ActionPerformed
-        JFileChooser fileChooser = new JFileChooser(".");
-
-        fileChooser.setFileFilter(new FileFilter() {
-            public boolean accept(File f) {
-                if (f.getName().endsWith("json") || f.isDirectory()) {
-                    return true;
-                }
-                return false;
-            }
-
-            public String getDescription() {
-                return "Only JSON";
-            }
-        });
-        int option = fileChooser.showSaveDialog(this);
-        if (option == 0) {
-            File file;
-            if (fileChooser.getSelectedFile().getAbsolutePath().endsWith("json")) {
-                file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-            } else {
-                file = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".json");
-            }
-
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-            }
-
-            Gson gson = new Gson();
-
-            Writer writer = null;
-            try {
-                writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath(), new String[0]),
-                        new java.nio.file.OpenOption[0]);
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-            }
-
-            gson.toJson(this.conflist, writer);
-
-            try {
-                writer.close();
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-            }
-
-            this.conflist_check = new ArrayList<>();
-            for (Configurations config : this.conflist) {
-                this.conflist_check.add(config.clone());
-            }
-        }
-    }// GEN-LAST:event_jMenuItem3ActionPerformed
 
     public void OpenWasClicked() {
         this.model = new ArrayList<>();

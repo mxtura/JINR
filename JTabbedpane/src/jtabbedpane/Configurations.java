@@ -24,9 +24,9 @@ public class Configurations
     }
 
     public void Add(String address) {
-        ArrayList<String> addressesArr = new ArrayList();
+        ArrayList<Object> addressesArr = new ArrayList();
         addressesArr.add(address);
-        addressesArr.add(Boolean.valueOf(true).toString());
+        addressesArr.add(true);
         this.devices.add(addressesArr);
     }
 

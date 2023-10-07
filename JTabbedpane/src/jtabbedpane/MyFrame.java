@@ -190,7 +190,7 @@ public class MyFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(560, Short.MAX_VALUE))
+                .addContainerGap(551, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -345,7 +345,7 @@ public class MyFrame extends javax.swing.JFrame {
         }
 
         logger.log(Level.INFO, "Подсистема была переименована с '"
-            + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
+                + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
         ((Configurations) this.conflist.get(this.rowindex)).title = nm;
         this.jTabbedPane1.setTitleAt(this.rowindex + 1, nm);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -454,6 +454,80 @@ public class MyFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if (this.currentFile == null) {
+            jMenuItem3ActionPerformed(evt);
+        } else {
+            File file = new File(this.currentFile.toString());
+            Gson gson = new Gson();
+
+            Writer writer = null;
+            try {
+                writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath(), new String[0]),
+                        new java.nio.file.OpenOption[0]);
+            } catch (IOException ex) {
+
+                logger.log(Level.SEVERE, (Supplier<String>) ex);
+
+                return;
+            }
+            gson.toJson(this.conflist, writer);
+
+            try {
+                writer.close();
+            } catch (IOException ex) {
+
+                logger.log(Level.SEVERE, (Supplier<String>) ex);
+            }
+
+            this.conflist_check = new ArrayList<>();
+            for (Configurations config : this.conflist) {
+                this.conflist_check.add(config.clone());
+            }
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JFileChooser fileChooser = new JFileChooser(".");
+        fileChooser.setFileFilter(new FileFilter() {
+            public boolean accept(File f) {
+                if (f.getName().endsWith("json") || f.isDirectory()) {
+                    return true;
+                }
+                return false;
+            }
+
+            public String getDescription() {
+                return "Only JSON";
+            }
+        });
+        int option = fileChooser.showOpenDialog(this);
+        if (option == 0) {
+            File file = fileChooser.getSelectedFile();
+
+            try {
+                Gson gson = new Gson();
+                Reader reader = Files.newBufferedReader(file.toPath());
+                this.conflist = new ArrayList<>(
+                        Arrays.asList((Configurations[]) gson.fromJson(reader, Configurations[].class)));
+                this.conflist_check = new ArrayList<>();
+                for (Configurations config : this.conflist) {
+                    this.conflist_check.add(config.clone());
+                }
+
+                reader.close();
+                DefaultTableModel dtm = (DefaultTableModel) this.jTable2.getModel();
+                dtm.setRowCount(0);
+                OpenWasClicked();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        updateTable();
+        this.currentFile = fileChooser.getSelectedFile();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     protected void processWindowEvent(WindowEvent we) {
         if (we.getID() == 201) {
             if (this.conflist.isEmpty() && this.conflist_check.isEmpty()) {
@@ -516,80 +590,6 @@ public class MyFrame extends javax.swing.JFrame {
         updateTable();
         logger.log(Level.INFO, "Была создана новая подсистема " + nm);
     }// GEN-LAST:event_jButton1ActionPerformed
-
-    private void jMenuItem1ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jMenuItem1ActionPerformed
-        if (this.currentFile == null) {
-            jMenuItem3ActionPerformed(evt);
-        } else {
-            File file = new File(this.currentFile.toString());
-            Gson gson = new Gson();
-
-            Writer writer = null;
-            try {
-                writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath(), new String[0]),
-                        new java.nio.file.OpenOption[0]);
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-
-                return;
-            }
-            gson.toJson(this.conflist, writer);
-
-            try {
-                writer.close();
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-            }
-
-            this.conflist_check = new ArrayList<>();
-            for (Configurations config : this.conflist) {
-                this.conflist_check.add(config.clone());
-            }   
-        }
-    }// GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jMenuItem2ActionPerformed
-        JFileChooser fileChooser = new JFileChooser(".");
-        fileChooser.setFileFilter(new FileFilter() {
-            public boolean accept(File f) {
-                if (f.getName().endsWith("json") || f.isDirectory()) {
-                    return true;
-                }
-                return false;
-            }
-
-            public String getDescription() {
-                return "Only JSON";
-            }
-        });
-        int option = fileChooser.showOpenDialog(this);
-        if (option == 0) {
-            File file = fileChooser.getSelectedFile();
-
-            try {
-                Gson gson = new Gson();
-                Reader reader = Files.newBufferedReader(file.toPath());
-                this.conflist = new ArrayList<>(
-                        Arrays.asList((Configurations[]) gson.fromJson(reader, Configurations[].class)));
-                this.conflist_check = new ArrayList<>();
-                for (Configurations config : this.conflist) {
-                    this.conflist_check.add(config.clone());
-                }
-
-                reader.close();
-                DefaultTableModel dtm = (DefaultTableModel) this.jTable2.getModel();
-                dtm.setRowCount(0);
-                OpenWasClicked();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        updateTable();
-        this.currentFile = fileChooser.getSelectedFile();
-    }// GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton2ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
         int res = JOptionPane.showConfirmDialog(this, "Вы уверены?");
@@ -665,8 +665,10 @@ public class MyFrame extends javax.swing.JFrame {
 
         scheduler.scheduleAtFixedRate(() -> {
             SwingUtilities.invokeLater(() -> {
+                updateTable();
             });
         }, 0L, 1L, TimeUnit.SECONDS);
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

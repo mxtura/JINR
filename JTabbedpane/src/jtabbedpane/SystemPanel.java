@@ -398,9 +398,9 @@ public class SystemPanel
         }
 
         public void OpenConfig() {
-            for (ArrayList<String> al : ((Configurations) this.conflist.get(this.index - 1)).devices) {
-                String n1 = al.get(0);
-                boolean n2 = Boolean.parseBoolean(al.get(1));
+            for (ArrayList<Object> al : ((Configurations) this.conflist.get(this.index - 1)).devices) {
+                String n1 = (String) al.get(0);
+                boolean n2 = (boolean)al.get(1);
                 CreatingAddresses(n1, n2);
             }
         }

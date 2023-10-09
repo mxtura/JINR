@@ -33,6 +33,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.Toolkit;
 
 /**
  *
@@ -423,6 +424,7 @@ public class SystemPanel
                             this.logger.log(Level.INFO,
                                     "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
                                     + " устройства с поднятым флагом \"Крит\" перестали отвечать");
+                            Toolkit.getDefaultToolkit().beep();
                         }
                         ((Configurations) this.conflist.get(this.index - 1)).condition = Color.RED;
                         return;

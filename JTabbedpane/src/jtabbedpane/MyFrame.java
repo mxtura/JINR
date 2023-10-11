@@ -1,6 +1,8 @@
 package jtabbedpane;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Point;
@@ -416,7 +418,9 @@ public class MyFrame extends javax.swing.JFrame {
                 logger.log(Level.SEVERE, (Supplier<String>) ex);
             }
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorTypeAdapter())
+                    .create();
 
             Writer writer = null;
             try {
@@ -448,7 +452,9 @@ public class MyFrame extends javax.swing.JFrame {
             jMenuItem3ActionPerformed(evt);
         } else {
             File file = new File(this.currentFile.toString());
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorTypeAdapter())
+                    .create();
 
             Writer writer = null;
             try {
@@ -495,7 +501,9 @@ public class MyFrame extends javax.swing.JFrame {
             File file = fileChooser.getSelectedFile();
 
             try {
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder()
+                        .registerTypeAdapter(Color.class, new ColorTypeAdapter())
+                        .create();
                 Reader reader = Files.newBufferedReader(file.toPath());
                 this.conflist = new ArrayList<>(
                         Arrays.asList((Configurations[]) gson.fromJson(reader, Configurations[].class)));
@@ -657,7 +665,7 @@ public class MyFrame extends javax.swing.JFrame {
                 updateTable();
             });
         }, 0L, 1L, TimeUnit.SECONDS);
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -272,75 +272,6 @@ public class MyFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String nm = JOptionPane.showInputDialog(this, "Введите название подсистемы");
-        if (nm == null || nm.length() <= 0) {
-            return;
-        }
-
-        List<String> logLines = new ArrayList<>();
-
-        try {
-            Scanner scanner = new Scanner(new File("logs.log"));
-            try {
-                while (scanner.hasNextLine()) {
-                    logLines.add(scanner.nextLine());
-                }
-                scanner.close();
-            } catch (Throwable throwable) {
-                try {
-                    scanner.close();
-                } catch (Throwable throwable1) {
-                    throwable.addSuppressed(throwable1);
-                }
-                throw throwable;
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, ex);
-        }
-
-        for (int i = 0; i < logLines.size(); i++) {
-            String line = logLines.get(i);
-            line = line.replace(((Configurations) this.conflist.get(this.rowindex)).title, nm);
-            logLines.set(i, line);
-        }
-        fileHandler.close();
-
-        try {
-            PrintWriter writer = new PrintWriter(new File("logs.log"));
-            try {
-                for (String line : logLines) {
-                    writer.println(line);
-                }
-                writer.close();
-            } catch (Throwable throwable) {
-                try {
-                    writer.close();
-                } catch (Throwable throwable1) {
-                    throwable.addSuppressed(throwable1);
-                }
-                throw throwable;
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, ex);
-        }
-
-        try {
-            fileHandler = new FileHandler("logs.log", true);
-            fileHandler.setFormatter(new SimpleFormatter());
-            logger.addHandler(fileHandler);
-        } catch (IOException ex) {
-            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
-        }
-
-        logger.log(Level.INFO, "Подсистема была переименована с '"
-                + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
-        ((Configurations) this.conflist.get(this.rowindex)).title = nm;
-        this.jTabbedPane1.setTitleAt(this.rowindex + 1, nm);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         int interval;
         String input = JOptionPane.showInputDialog(this, "Введите интервал времени в секундах:",
@@ -418,9 +349,7 @@ public class MyFrame extends javax.swing.JFrame {
                 logger.log(Level.SEVERE, (Supplier<String>) ex);
             }
 
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(Color.class, new ColorTypeAdapter())
-                    .create();
+            Gson gson = new GsonBuilder().registerTypeAdapter(Configurations.class, new ConfigurationsTypeAdapter()).create();
 
             Writer writer = null;
             try {
@@ -452,9 +381,7 @@ public class MyFrame extends javax.swing.JFrame {
             jMenuItem3ActionPerformed(evt);
         } else {
             File file = new File(this.currentFile.toString());
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(Color.class, new ColorTypeAdapter())
-                    .create();
+            Gson gson = new GsonBuilder().registerTypeAdapter(Configurations.class, new ConfigurationsTypeAdapter()).create();
 
             Writer writer = null;
             try {
@@ -501,9 +428,7 @@ public class MyFrame extends javax.swing.JFrame {
             File file = fileChooser.getSelectedFile();
 
             try {
-                Gson gson = new GsonBuilder()
-                        .registerTypeAdapter(Color.class, new ColorTypeAdapter())
-                        .create();
+                Gson gson = new GsonBuilder().registerTypeAdapter(Configurations.class, new ConfigurationsTypeAdapter()).create();
                 Reader reader = Files.newBufferedReader(file.toPath());
                 this.conflist = new ArrayList<>(
                         Arrays.asList((Configurations[]) gson.fromJson(reader, Configurations[].class)));
@@ -525,6 +450,111 @@ public class MyFrame extends javax.swing.JFrame {
         this.currentFile = fileChooser.getSelectedFile();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nm = JOptionPane.showInputDialog(this, "Введите название подсистемы");
+
+        if (nm == null || nm.length() <= 0) {
+            return;
+        }
+
+        Configurations conf = new Configurations(nm);
+        this.conflist.add(conf);
+
+        this.md.addRow(new Object[]{nm});
+
+        SystemPanel sp = new SystemPanel(this.conflist, this.model, logger);
+        this.jTabbedPane1.addTab(nm, sp);
+        this.jTabbedPane1.setSelectedIndex(this.jTabbedPane1.getTabCount() - 1);
+        sp.index = this.jTabbedPane1.getSelectedIndex();
+        scheduler.scheduleAtFixedRate(sp, 0L, deviceCheckInterval, TimeUnit.SECONDS);
+        updateTable();
+        logger.log(Level.INFO, "Была создана новая подсистема " + nm);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int res = JOptionPane.showConfirmDialog(this, "Вы уверены?");
+        if (res == 0) {
+            this.jTabbedPane1.removeTabAt(this.rowindex + 1);
+            logger.log(Level.INFO,
+                    "Была удалена подсистема " + ((Configurations) this.conflist.get(this.rowindex)).title);
+            this.conflist.remove(this.rowindex);
+            this.md.removeRow(this.rowindex);
+            this.jButton2.setEnabled(false);
+            updateTable();
+        } else {
+            return;
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String nm = JOptionPane.showInputDialog(this, "Введите название подсистемы");
+        if (nm == null || nm.length() <= 0) {
+            return;
+        }
+
+        List<String> logLines = new ArrayList<>();
+
+        try {
+            Scanner scanner = new Scanner(new File("logs.log"));
+            try {
+                while (scanner.hasNextLine()) {
+                    logLines.add(scanner.nextLine());
+                }
+                scanner.close();
+            } catch (Throwable throwable) {
+                try {
+                    scanner.close();
+                } catch (Throwable throwable1) {
+                    throwable.addSuppressed(throwable1);
+                }
+                throw throwable;
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, ex);
+        }
+
+        for (int i = 0; i < logLines.size(); i++) {
+            String line = logLines.get(i);
+            line = line.replace(((Configurations) this.conflist.get(this.rowindex)).title, nm);
+            logLines.set(i, line);
+        }
+        fileHandler.close();
+
+        try {
+            PrintWriter writer = new PrintWriter(new File("logs.log"));
+            try {
+                for (String line : logLines) {
+                    writer.println(line);
+                }
+                writer.close();
+            } catch (Throwable throwable) {
+                try {
+                    writer.close();
+                } catch (Throwable throwable1) {
+                    throwable.addSuppressed(throwable1);
+                }
+                throw throwable;
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, ex);
+        }
+
+        try {
+            fileHandler = new FileHandler("logs.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+        } catch (IOException ex) {
+            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
+        }
+
+        logger.log(Level.INFO, "Подсистема была переименована с '"
+            + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
+        ((Configurations) this.conflist.get(this.rowindex)).title = nm;
+        this.jTabbedPane1.setTitleAt(this.rowindex + 1, nm);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     protected void processWindowEvent(WindowEvent we) {
         if (we.getID() == 201) {
             if (this.conflist.isEmpty() && this.conflist_check.isEmpty()) {
@@ -536,7 +566,7 @@ public class MyFrame extends javax.swing.JFrame {
                 int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
                         "Подтверждение сохранения", 1);
                 if (option == 0) {
-                    jMenuItem1ActionPerformed((ActionEvent) null);
+                    jMenuItem1ActionPerformed(null);
                 } else if (option == 2) {
                     return;
                 }
@@ -567,41 +597,6 @@ public class MyFrame extends javax.swing.JFrame {
         jPanel1.revalidate();
     }
 
-    private void jButton1ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-        String nm = JOptionPane.showInputDialog(this, "Введите название подсистемы");
-
-        if (nm == null || nm.length() <= 0) {
-            return;
-        }
-
-        Configurations conf = new Configurations(nm);
-        this.conflist.add(conf);
-
-        this.md.addRow(new Object[]{nm});
-
-        SystemPanel sp = new SystemPanel(this.conflist, this.model, logger);
-        this.jTabbedPane1.addTab(nm, sp);
-        this.jTabbedPane1.setSelectedIndex(this.jTabbedPane1.getTabCount() - 1);
-        sp.index = this.jTabbedPane1.getSelectedIndex();
-        scheduler.scheduleAtFixedRate(sp, 0L, deviceCheckInterval, TimeUnit.SECONDS);
-        updateTable();
-        logger.log(Level.INFO, "Была создана новая подсистема " + nm);
-    }// GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
-        int res = JOptionPane.showConfirmDialog(this, "Вы уверены?");
-        if (res == 0) {
-            this.jTabbedPane1.removeTabAt(this.rowindex + 1);
-            logger.log(Level.INFO,
-                    "Была удалена подсистема " + ((Configurations) this.conflist.get(this.rowindex)).title);
-            this.conflist.remove(this.rowindex);
-            this.md.removeRow(this.rowindex);
-            this.jButton2.setEnabled(false);
-            updateTable();
-        } else {
-            return;
-        }
-    }// GEN-LAST:event_jButton2ActionPerformed
 
     public void OpenWasClicked() {
         this.model = new ArrayList<>();

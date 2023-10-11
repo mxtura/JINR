@@ -4,6 +4,7 @@
  */
 package jtabbedpane;
 
+import com.google.gson.annotations.Expose;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,14 @@ public class Configurations
         implements Cloneable {
     public String title;
     public List<ArrayList> devices = new ArrayList<>();
+    
+    @Expose(serialize = false) 
     public Color condition = Color.YELLOW;
 
+    public Configurations(){
+        this.title = "notitle   ";
+    };
+    
     public Configurations(String title) {
         this.title = title;
     }

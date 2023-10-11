@@ -79,3 +79,69 @@
 2023-10-11 19:23:35 [INFO   ] jtabbedpane.MyFrame - В подсистеме фиктивная система нет устройств с поднятым флагом "Крит", имеющих проблем 
 2023-10-11 19:23:35 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
 2023-10-11 19:38:04 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 20:53:09 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 21:15:45 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 21:51:37 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 21:52:46 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:02:12 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:03:00 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:03:57 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:04:32 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:06:05 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:06:11 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:07:13 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:07:27 [INFO   ] jtabbedpane.MyFrame - В подсистеме cj все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:07:27 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема cj 
+2023-10-11 22:07:32 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'frq' в подсистему 'cj' 
+2023-10-11 22:07:35 [INFO   ] jtabbedpane.MyFrame - В подсистеме cj устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:08:13 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:10:23 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:10:29 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема woow 
+2023-10-11 22:10:29 [INFO   ] jtabbedpane.MyFrame - В подсистеме woow все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:10:34 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'ewfwd' в подсистему 'woow' 
+2023-10-11 22:10:37 [INFO   ] jtabbedpane.MyFrame - В подсистеме woow устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:10:40 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:10:47 [INFO   ] jtabbedpane.MyFrame - В подсистеме 23 все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:10:47 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема 23 
+2023-10-11 22:10:51 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'egw' в подсистему '23' 
+2023-10-11 22:10:51 [INFO   ] jtabbedpane.MyFrame - В подсистеме 23 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:11:07 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:11:18 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:11:22 [INFO   ] jtabbedpane.MyFrame - В подсистеме gfsd все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:11:22 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема gfsd 
+2023-10-11 22:11:26 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'gdsgsd' в подсистему 'gfsd' 
+2023-10-11 22:11:26 [INFO   ] jtabbedpane.MyFrame - В подсистеме gfsd устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:12:06 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:15:30 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:15:37 [INFO   ] jtabbedpane.MyFrame - В подсистеме cj устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:26:22 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:26:53 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:27:11 [INFO   ] jtabbedpane.MyFrame - В подсистеме фиктивная система все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:27:11 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема фиктивная система 
+2023-10-11 22:27:22 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'noaddress' в подсистему 'фиктивная система' 
+2023-10-11 22:27:23 [INFO   ] jtabbedpane.MyFrame - В подсистеме фиктивная система устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:27:35 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'wrongaddress' в подсистему 'фиктивная система' 
+2023-10-11 22:27:47 [INFO   ] jtabbedpane.MyFrame - В подсистеме фиктивная система нет устройств с поднятым флагом "Крит", имеющих проблем 
+2023-10-11 22:27:53 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема ТСистем 2 
+2023-10-11 22:27:53 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:28:05 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'diagnostics/websocket/bergoz1' в подсистему 'ТСистем 2' 
+2023-10-11 22:28:05 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:28:16 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'diagnostics/websocket/bergoz2' в подсистему 'ТСистем 2' 
+2023-10-11 22:28:26 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'diagnostics/websocket/bergozframe1' в подсистему 'ТСистем 2' 
+2023-10-11 22:28:44 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:28:50 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:29:57 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:30:05 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-11 22:35:04 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:38:20 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:38:30 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема gf 
+2023-10-11 22:38:30 [INFO   ] jtabbedpane.MyFrame - В подсистеме gf все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:39:02 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:39:09 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема re 
+2023-10-11 22:39:09 [INFO   ] jtabbedpane.MyFrame - В подсистеме re все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:39:29 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:39:34 [INFO   ] jtabbedpane.MyFrame - В подсистеме qeqwewq все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 22:39:34 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема qeqwewq 
+2023-10-11 22:43:08 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 22:43:11 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема fd 
+2023-10-11 22:43:11 [INFO   ] jtabbedpane.MyFrame - В подсистеме fd все устройства с поднятым флагом "Крит" отвечают 

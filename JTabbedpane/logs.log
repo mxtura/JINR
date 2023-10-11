@@ -145,3 +145,14 @@
 2023-10-11 22:43:08 [INFO   ] jtabbedpane.MyFrame - Start 
 2023-10-11 22:43:11 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема fd 
 2023-10-11 22:43:11 [INFO   ] jtabbedpane.MyFrame - В подсистеме fd все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 23:12:52 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 23:21:22 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 23:28:35 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 23:28:47 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 23:30:09 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 23:30:35 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 23:31:51 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 23:32:17 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема dd 
+2023-10-11 23:32:17 [INFO   ] jtabbedpane.MyFrame - В подсистеме dd все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 23:43:17 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 23:43:48 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 все устройства с поднятым флагом "Крит" отвечают 

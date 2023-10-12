@@ -156,3 +156,95 @@
 2023-10-11 23:32:17 [INFO   ] jtabbedpane.MyFrame - В подсистеме dd все устройства с поднятым флагом "Крит" отвечают 
 2023-10-11 23:43:17 [INFO   ] jtabbedpane.MyFrame - Start 
 2023-10-11 23:43:48 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 23:54:50 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-11 23:54:54 [INFO   ] jtabbedpane.MyFrame - В подсистеме dfg все устройства с поднятым флагом "Крит" отвечают 
+2023-10-11 23:54:54 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема dfg 
+2023-10-12 01:11:44 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 01:11:53 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 01:12:15 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 01:37:12 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 01:39:49 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 01:39:58 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 01:40:44 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 01:40:52 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 01:42:36 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 01:42:43 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 01:43:45 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 01:43:53 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 01:53:18 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 01:53:24 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 01:53:36 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 нет устройств с поднятым флагом "Крит", имеющих проблем 
+2023-10-12 01:53:40 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:22:18 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 02:22:26 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:25:08 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 02:25:10 [INFO   ] jtabbedpane.MyFrame - Была создана новая подсистема scvv 
+2023-10-12 02:25:10 [INFO   ] jtabbedpane.MyFrame - В подсистеме scvv все устройства с поднятым флагом "Крит" отвечают 
+2023-10-12 02:25:14 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'zsddf' в подсистему 'scvv' 
+2023-10-12 02:25:14 [INFO   ] jtabbedpane.MyFrame - В подсистеме scvv устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:30:06 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 02:30:13 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:42:40 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 02:42:49 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:43:05 [INFO   ] jtabbedpane.MyFrame - В подсистеме фиктивная система устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:43:09 [INFO   ] jtabbedpane.MyFrame - В подсистеме фиктивная система нет устройств с поднятым флагом "Крит", имеющих проблем 
+2023-10-12 02:46:04 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 02:46:15 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:46:22 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:46:22 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:46:22 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:47:12 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 02:47:19 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:47:23 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:47:28 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:47:28 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:47:28 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:48:34 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 02:48:45 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:48:50 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:48:50 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:48:50 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:48:54 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:48:56 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:48:56 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:48:56 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:49:03 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:49:03 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:49:03 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:49:05 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:49:08 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:49:08 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:49:08 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:51:02 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 02:51:09 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 02:51:14 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:51:17 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:51:17 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:51:22 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:51:22 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:51:22 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:51:27 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:51:31 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:51:31 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 02:51:48 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:51:48 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:51:48 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 02:55:02 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 03:18:13 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 03:18:20 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 03:18:24 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 03:18:25 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 03:19:07 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 03:19:14 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 03:19:17 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 03:19:18 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' включено логгирование 
+2023-10-12 03:19:19 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 03:26:23 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-12 03:26:30 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 
+2023-10-12 03:26:33 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz2' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 03:26:48 [INFO   ] jtabbedpane.MyFrame - Устройство 'hj' в подсистеме 'ТСистем 2' было изменено на 'hhh' 
+2023-10-12 03:27:02 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 нет устройств с поднятым флагом "Крит", имеющих проблем 
+2023-10-12 03:27:04 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 03:27:04 [INFO   ] jtabbedpane.MyFrame - У устройства 'hhh' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 03:27:04 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' выключено логгирование 
+2023-10-12 03:27:06 [INFO   ] jtabbedpane.MyFrame - В подсистеме ТСистем 2 устройства с поднятым флагом "Крит" перестали отвечать 

@@ -28,6 +28,7 @@ public class ConfigurationsTypeAdapter extends TypeAdapter<Configurations> {
             out.beginObject();
             out.name("name").value((String) device.get(0));
             out.name("critical").value((boolean) device.get(1));
+            out.name("logs_on").value((boolean) device.get(2));
             out.endObject();
         }
         out.endArray();
@@ -56,6 +57,8 @@ public class ConfigurationsTypeAdapter extends TypeAdapter<Configurations> {
                             if (name.equals("name")) {
                                 innerList.add(in.nextString());
                             } else if (name.equals("critical")) {
+                                innerList.add(in.nextBoolean());
+                            } else if (name.equals("logs_on")){
                                 innerList.add(in.nextBoolean());
                             }
                         }

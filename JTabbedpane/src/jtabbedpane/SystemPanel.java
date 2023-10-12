@@ -11,9 +11,7 @@ import fr.esrf.TangoApi.DeviceInfo;
 import fr.esrf.TangoApi.DeviceProxy;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -21,13 +19,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.LayoutStyle;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -80,6 +74,36 @@ public class SystemPanel
             }
         });
 
+        this.jTable1.getTableHeader().addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column = jTable1.columnAtPoint(e.getPoint());
+
+                boolean anySelected = false;
+                for (int row = 0; row < jTable1.getRowCount(); row++) {
+                    if ((Boolean) jTable1.getValueAt(row, column)) {
+                        anySelected = true;
+                        break;
+                    }
+                }
+
+                for (int row = 0; row < jTable1.getRowCount(); row++) {
+                    if (anySelected) {
+                        if ((boolean) jTable1.getValueAt(row, column) != false) {
+                            jTable1.setValueAt(false, row, column);
+                        }
+                    } else {
+                        jTable1.setValueAt(true, row, column);
+
+                    }
+
+                }
+                jTable1.repaint();
+            }
+
+        });
+
         changeTable(this.jTable1, 1);
         this.jTable1.getModel().addTableModelListener(new CheckBoxModelListener());
     }
@@ -98,6 +122,7 @@ public class SystemPanel
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(500, 400));
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -126,14 +151,14 @@ public class SystemPanel
 
             },
             new String [] {
-                "Адрес", "Сост", "State", "Status", "Крит"
+                "Адрес", "Сост", "State", "Status", "Крит", "Логи"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -161,6 +186,9 @@ public class SystemPanel
             jTable1.getColumnModel().getColumn(4).setMinWidth(45);
             jTable1.getColumnModel().getColumn(4).setPreferredWidth(45);
             jTable1.getColumnModel().getColumn(4).setMaxWidth(45);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(45);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(45);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(45);
         }
 
         jButton3.setText("Удалить устройство");
@@ -168,6 +196,13 @@ public class SystemPanel
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Показать логи");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -186,6 +221,8 @@ public class SystemPanel
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -198,42 +235,61 @@ public class SystemPanel
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addGap(12, 12, 12))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-        public void run() {
-            CalcOfCondition();
+    public void run() {
+        CalcOfCondition();
 
-            for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
-                this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
-                        i, 2);
-                this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[0],
-                        i, 3);
-            }
+        for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
+            this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
+                    i, 2);
+            this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[0],
+                    i, 3);
         }
+    }
 
-        public class CheckBoxModelListener
-                implements TableModelListener {
+    public class CheckBoxModelListener
+            implements TableModelListener {
 
-            public void tableChanged(TableModelEvent e) {
-                int row = e.getFirstRow();
-                int column = e.getColumn();
-                if (column == 4) {
-                    TableModel tmodel = (TableModel) e.getSource();
-                    String columnName = tmodel.getColumnName(column);
-                    Boolean checked = (Boolean) tmodel.getValueAt(row, column);
-                    if (!checked.booleanValue()) {
-                        ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
-                                .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(false));
-                    } else {
-                        ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
-                                .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(true));
-                    }
+        public void tableChanged(TableModelEvent e) {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+            if (column == 4) {
+                TableModel tmodel = (TableModel) e.getSource();
+                String columnName = tmodel.getColumnName(column);
+                Boolean checked = (Boolean) tmodel.getValueAt(row, column);
+                if (!checked.booleanValue()) {
+                    ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
+                            .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(false));
+                } else {
+                    ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
+                            .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(true));
+                }
+            }
+            if (column == 5) {
+                TableModel tmodel = (TableModel) e.getSource();
+                String columnName = tmodel.getColumnName(column);
+                Boolean checked = (Boolean) tmodel.getValueAt(row, column);
+                if (!checked.booleanValue()) {
+                    String msg = "У устройства '" + ((Configurations) conflist.get(index - 1)).devices.get(row).get(0) + "' в подсистеме '"
+                            + ((Configurations) conflist.get(index - 1)).title + "' выключено логгирование";
+                    loggit(Level.INFO,(String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
+                    ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
+                            .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, Boolean.valueOf(false));
+                } else {
+                    String msg = "У устройства '" + ((Configurations) conflist.get(index - 1)).devices.get(row).get(0) + "' в подсистеме '"
+                            + ((Configurations) conflist.get(index - 1)).title + "' включено логгирование";
+                    loggit(Level.INFO,(String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
+                    ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
+                            .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, Boolean.valueOf(true));
                 }
             }
         }
+    }
 
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nm = JOptionPane.showInputDialog(this, "Введите адрес устройства");
@@ -261,7 +317,7 @@ public class SystemPanel
         ((Configurations) this.conflist.get(this.index - 1)).Add(nm);
         this.logger.log(Level.INFO, "Добавлено новое устройство '" + nm + "' в подсистему '"
                 + ((Configurations) this.conflist.get(this.index - 1)).title + "'");
-        CreatingAddresses(nm, true);
+        CreatingAddresses(nm, true, true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -271,185 +327,204 @@ public class SystemPanel
         if (nm == null || nm.length() <= 0) {
             return;
         }
-
-        this.logger.log(Level.INFO, "Устройство '" + dm.getValueAt(this.rowindex, 0) + "' в подсистеме '"
-                + ((Configurations) this.conflist.get(this.index - 1)).title + "' было изменено на '" + nm + "'");
+        String msg = "Устройство '" + dm.getValueAt(this.rowindex, 0) + "' в подсистеме '"
+                + ((Configurations) this.conflist.get(this.index - 1)).title + "' было изменено на '" + nm + "'";
+        loggit(Level.INFO, (String) dm.getValueAt(this.rowindex, 0), msg);
 
         ChangingAdress(dm, nm);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(ActionEvent evt) {                                         
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String subsystemName = ((Configurations) this.conflist.get(this.index - 1)).title;
+
+        LogView logView = new LogView();
+        logView.loadLogs(subsystemName);
+        logView.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(ActionEvent evt) {
         int res = JOptionPane.showConfirmDialog(this, "Вы уверены?");
         if (res == 0) {
             ((DefaultTableModel) this.jTable1.getModel()).removeRow(this.rowindex);
-            this.logger.log(Level.INFO,
-                    "Удалено устройство '"
+            String msg = "Удалено устройство '"
                     + ((ArrayList<String>) ((Configurations) this.conflist.get(this.index - 1)).devices
                             .get(this.rowindex)).get(0)
-                    + "' из подсистемы '" + ((Configurations) this.conflist.get(this.index - 1)).title + "'");
+                    + "' из подсистемы '" + ((Configurations) this.conflist.get(this.index - 1)).title + "'";
+            loggit(Level.INFO,((ArrayList<String>) ((Configurations) this.conflist.get(this.index - 1)).devices
+                            .get(this.rowindex)).get(0),msg);
             ((Configurations) this.conflist.get(this.index - 1)).DeleteAd(this.rowindex);
         } else {
             return;
         }
-    }                                        
+    }
 
-
-        private void changeTable(JTable table, int column_index) {
-            table.getColumnModel().getColumn(column_index).setCellRenderer(new DefaultTableCellRenderer() {
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                        boolean hasFocus, int row, int column) {
-                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                    String st_val = table.getValueAt(row, 2).toString();
-                    if (st_val == "ON") {
-                        c.setBackground(Color.GREEN);
-                    } else {
-
-                        c.setBackground(Color.RED);
-                    }
-                    return c;
-                }
-            });
-        }
-
-        public void CreatingAddresses(String nm, boolean bl) {
-            String status = CheckingAdress(nm)[0];
-            String state = CheckingAdress(nm)[1];
-
-            Object[] data = {nm, "", state, status, Boolean.valueOf(bl)};
-
-            ((DefaultTableModel) this.model.get(this.index - 1)).addRow(data);
-        }
-
-        public String[] CheckingAdress(String nm) {
-            String status = "";
-            String state = "";
-
-            DeviceProxy dev = null;
-
-            try {
-                dev = new DeviceProxy(nm);
-                status = dev.status();
-                state = dev.state().toString();
-            } catch (DevFailed e) {
-
-                if (dev != null) {
-                    if (status != "Нет связи с устройством" && status != "") {
-                        this.logger.log(Level.INFO, "У устройства '" + nm
-                                + "' изменился статус c 'Нет связи с устройством' на '" + status + "'");
-                    }
-                    status = "Нет связи с устройством";
+    private void changeTable(JTable table, int column_index) {
+        table.getColumnModel().getColumn(column_index).setCellRenderer(new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                String st_val = table.getValueAt(row, 2).toString();
+                if (st_val == "ON") {
+                    c.setBackground(Color.GREEN);
                 } else {
-                    if (status != "Нет устройства с таким адресом" && status != "") {
-                        this.logger.log(Level.INFO, "У устройства '" + nm
-                                + "' изменился статус c 'Нет устройства с таким адресом' на '" + status + "'");
-                    }
-                    status = "Нет устройства с таким адресом";
-                }
 
-                state = "no conn.";
+                    c.setBackground(Color.RED);
+                }
+                return c;
+            }
+        });
+    }
+
+    private void loggit(Level lv, String nm, String msg) {
+        if ((boolean) ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).get(2)){
+            this.logger.log(lv, msg);
+        }
+    }
+
+    public void CreatingAddresses(String nm, boolean cr, boolean lg) {
+        String status = CheckingAdress(nm)[0];
+        String state = CheckingAdress(nm)[1];
+
+        Object[] data = {nm, "", state, status, Boolean.valueOf(cr), Boolean.valueOf(lg)};
+
+        ((DefaultTableModel) this.model.get(this.index - 1)).addRow(data);
+    }
+
+    public String[] CheckingAdress(String nm) {
+        String status = "";
+        String state = "";
+
+        DeviceProxy dev = null;
+
+        try {
+            dev = new DeviceProxy(nm);
+            status = dev.status();
+            state = dev.state().toString();
+        } catch (DevFailed e) {
+
+            if (dev != null) {
+                if (status != "Нет связи с устройством" && status != "") {
+                    String msg = "У устройства '" + nm
+                            + "' изменился статус c 'Нет связи с устройством' на '" + status + "'";
+                    loggit(Level.INFO, nm, msg);
+
+                }
+                status = "Нет связи с устройством";
+            } else {
+                if (status != "Нет устройства с таким адресом" && status != "") {
+                    String msg = "У устройства '" + nm
+                            + "' изменился статус c 'Нет устройства с таким адресом' на '" + status + "'";
+                    loggit(Level.INFO, nm, msg);
+                }
+                status = "Нет устройства с таким адресом";
             }
 
-            return new String[]{status, state};
+            state = "no conn.";
         }
 
-        private void ChangingAdress(DefaultTableModel dm, String nm) {
-            DeviceProxy dev = null;
+        return new String[]{status, state};
+    }
 
-            try {
-                dev = new DeviceProxy(nm);
+    private void ChangingAdress(DefaultTableModel dm, String nm) {
+        DeviceProxy dev = null;
 
-                dm.setValueAt(dev.state(), this.rowindex, 2);
-                dm.setValueAt(dev.status(), this.rowindex, 3);
-            } catch (DevFailed e) {
+        try {
+            dev = new DeviceProxy(nm);
 
-                if (dev != null) {
+            dm.setValueAt(dev.state(), this.rowindex, 2);
+            dm.setValueAt(dev.status(), this.rowindex, 3);
+        } catch (DevFailed e) {
+
+            if (dev != null) {
+                dm.setValueAt("no conn.", this.rowindex, 2);
+                dm.setValueAt("Нет связи с устройством", this.rowindex, 3);
+            } else {
+                Object[] options = {"Оставить", "Изменить", "Отмена"};
+                int n = JOptionPane.showOptionDialog(this,
+                        "Этого адреса нет в базе. Вы точно хотите ввести этот адрес?", "Ошибка", 1, 3, null, options,
+                        options[2]);
+
+                if (n == 0) {
+                    dm.setValueAt("Нет устройства с таким адресом", this.rowindex, 3);
                     dm.setValueAt("no conn.", this.rowindex, 2);
-                    dm.setValueAt("Нет связи с устройством", this.rowindex, 3);
                 } else {
-                    Object[] options = {"Оставить", "Изменить", "Отмена"};
-                    int n = JOptionPane.showOptionDialog(this,
-                            "Этого адреса нет в базе. Вы точно хотите ввести этот адрес?", "Ошибка", 1, 3, null, options,
-                            options[2]);
-
-                    if (n == 0) {
-                        dm.setValueAt("Нет устройства с таким адресом", this.rowindex, 3);
-                        dm.setValueAt("no conn.", this.rowindex, 2);
-                    } else {
-                        if (n == 1) {
-                            String nm1 = JOptionPane.showInputDialog(this, "Введите адрес устройства", nm);
-                            ChangingAdress(dm, nm1);
-                            return;
-                        }
-                        if (n == 2) {
-                            return;
-                        }
-                    }
-
-                }
-            }
-            ((Configurations) this.conflist.get(this.index - 1)).ChangeNameAd(this.rowindex, nm);
-            dm.setValueAt(nm, this.rowindex, 0);
-        }
-
-        public void OpenConfig() {
-            for (ArrayList<Object> al : ((Configurations) this.conflist.get(this.index - 1)).devices) {
-                String n1 = (String) al.get(0);
-                boolean n2 = (boolean)al.get(1);
-                CreatingAddresses(n1, n2);
-            }
-        }
-
-        public void CalcOfCondition() {
-            int green_flag = 0;
-            int red_flag = 0;
-            int red_count = 0;
-
-            for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
-                if (CheckingAdress(this.jTable1.getValueAt(i, 0).toString())[1] == "ON") {
-                    if (((Boolean) this.jTable1.getValueAt(i, 4)).booleanValue() == true) {
-                        green_flag++;
-                    }
-                } else {
-                    red_count++;
-
-                    if (((Boolean) this.jTable1.getValueAt(i, 4)).booleanValue() == true) {
-                        if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.RED) {
-                            this.logger.log(Level.INFO,
-                                    "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
-                                    + " устройства с поднятым флагом \"Крит\" перестали отвечать");
-                            Toolkit.getDefaultToolkit().beep();
-                        }
-                        ((Configurations) this.conflist.get(this.index - 1)).condition = Color.RED;
+                    if (n == 1) {
+                        String nm1 = JOptionPane.showInputDialog(this, "Введите адрес устройства", nm);
+                        ChangingAdress(dm, nm1);
                         return;
                     }
-                    red_flag++;
+                    if (n == 2) {
+                        return;
+                    }
                 }
-            }
 
-            if (green_flag == ((Configurations) this.conflist.get(this.index - 1)).devices.size()) {
-                if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.GREEN) {
-                    this.logger.log(Level.INFO, "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
-                            + " все устройства с поднятым флагом \"Крит\" отвечают");
-                }
-                ((Configurations) this.conflist.get(this.index - 1)).condition = Color.GREEN;
-
-                return;
-            }
-            if (red_count == red_flag) {
-                if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.YELLOW) {
-                    this.logger.log(Level.INFO, "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
-                            + " нет устройств с поднятым флагом \"Крит\", имеющих проблем");
-                }
-                ((Configurations) this.conflist.get(this.index - 1)).condition = Color.YELLOW;
-                return;
             }
         }
+        ((Configurations) this.conflist.get(this.index - 1)).ChangeNameAd(this.rowindex, nm);
+        dm.setValueAt(nm, this.rowindex, 0);
+    }
+
+    public void OpenConfig() {
+        for (ArrayList<Object> al : ((Configurations) this.conflist.get(this.index - 1)).devices) {
+            String n1 = (String) al.get(0);
+            boolean n2 = (boolean) al.get(1);
+            boolean n3 = (boolean) al.get(2);
+            CreatingAddresses(n1, n2, n3);
+        }
+    }
+
+    public void CalcOfCondition() {
+        int green_flag = 0;
+        int red_flag = 0;
+        int red_count = 0;
+
+        for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
+            if (CheckingAdress(this.jTable1.getValueAt(i, 0).toString())[1] == "ON") {
+                if (((Boolean) this.jTable1.getValueAt(i, 4)).booleanValue() == true) {
+                    green_flag++;
+                }
+            } else {
+                red_count++;
+
+                if (((Boolean) this.jTable1.getValueAt(i, 4)).booleanValue() == true) {
+                    if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.RED) {
+                        this.logger.log(Level.INFO,
+                                "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
+                                + " устройства с поднятым флагом \"Крит\" перестали отвечать");
+                        Toolkit.getDefaultToolkit().beep();
+                    }
+                    ((Configurations) this.conflist.get(this.index - 1)).condition = Color.RED;
+                    return;
+                }
+                red_flag++;
+            }
+        }
+
+        if (green_flag == ((Configurations) this.conflist.get(this.index - 1)).devices.size()) {
+            if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.GREEN) {
+                this.logger.log(Level.INFO, "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
+                        + " все устройства с поднятым флагом \"Крит\" отвечают");
+            }
+            ((Configurations) this.conflist.get(this.index - 1)).condition = Color.GREEN;
+
+            return;
+        }
+        if (red_count == red_flag) {
+            if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.YELLOW) {
+                this.logger.log(Level.INFO, "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
+                        + " нет устройств с поднятым флагом \"Крит\", имеющих проблем");
+            }
+            ((Configurations) this.conflist.get(this.index - 1)).condition = Color.YELLOW;
+            return;
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

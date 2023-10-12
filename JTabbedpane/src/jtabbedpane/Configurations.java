@@ -16,15 +16,18 @@ import java.util.Objects;
  */
 public class Configurations
         implements Cloneable {
+
     public String title;
     public List<ArrayList> devices = new ArrayList<>();
-    
-    @Expose(serialize = false) 
+
+    @Expose(serialize = false)
     public Color condition = Color.YELLOW;
 
-    public Configurations(){
-        this.title = "notitle   ";
-    };
+    public Configurations() {
+        this.title = "notitle";
+    }
+
+    ;
     
     public Configurations(String title) {
         this.title = title;
@@ -34,11 +37,23 @@ public class Configurations
         ArrayList<Object> addressesArr = new ArrayList();
         addressesArr.add(address);
         addressesArr.add(true);
+        addressesArr.add(true);
         this.devices.add(addressesArr);
     }
 
     public void DeleteAd(int indAd) {
         this.devices.remove(indAd);
+    }
+
+    public ArrayList<Object> findDevice(String address) {
+
+        for (ArrayList<Object> device : devices) {
+            if (device.get(0).equals(address)) {
+                return device;
+            }
+        }
+
+        return null;
     }
 
     public void ChangeNameAd(int ind, String nm) {
@@ -70,6 +85,6 @@ public class Configurations
     }
 
     public int hashCode() {
-        return Objects.hash(new Object[] { this.title, this.devices });
+        return Objects.hash(new Object[]{this.title, this.devices});
     }
 }

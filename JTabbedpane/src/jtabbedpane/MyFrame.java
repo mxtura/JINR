@@ -2,7 +2,6 @@ package jtabbedpane;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Point;
@@ -271,7 +270,7 @@ public class MyFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         int interval;
         String input = JOptionPane.showInputDialog(this, "Введите интервал времени в секундах:",

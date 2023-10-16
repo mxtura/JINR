@@ -243,7 +243,6 @@ public class SystemPanel
 
     public void run() {
         CalcOfCondition();
-
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
                     i, 2);
@@ -263,9 +262,15 @@ public class SystemPanel
                 String columnName = tmodel.getColumnName(column);
                 Boolean checked = (Boolean) tmodel.getValueAt(row, column);
                 if (!checked.booleanValue()) {
+                    String msg = "Снят флаг критичности для устройства " + ((Configurations) conflist
+                            .get(index - 1)).devices.get(row).get(0);
+                    loggit(Level.INFO, (String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
                     ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
                             .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(false));
                 } else {
+                    String msg = "Установлен флаг критичности для устройства " + ((Configurations) conflist
+                            .get(index - 1)).devices.get(row).get(0);
+                    loggit(Level.INFO, (String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
                     ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
                             .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(true));
                 }
@@ -276,16 +281,17 @@ public class SystemPanel
                 Boolean checked = (Boolean) tmodel.getValueAt(row, column);
                 if (!checked.booleanValue()) {
                     String msg = "У устройства '" + ((Configurations) conflist.get(index - 1)).devices.get(row).get(0) + "' в подсистеме '"
-                            + ((Configurations) conflist.get(index - 1)).title + "' выключено логгирование";
-                    loggit(Level.INFO,(String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
+                            + ((Configurations) conflist.get(index - 1)).title + "' логгирование отключено";
+                    loggit(Level.INFO, (String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
                     ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
                             .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, Boolean.valueOf(false));
                 } else {
-                    String msg = "У устройства '" + ((Configurations) conflist.get(index - 1)).devices.get(row).get(0) + "' в подсистеме '"
-                            + ((Configurations) conflist.get(index - 1)).title + "' включено логгирование";
-                    loggit(Level.INFO,(String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
                     ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
                             .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, Boolean.valueOf(true));
+                    String msg = "У устройства '" + ((Configurations) conflist.get(index - 1)).devices.get(row).get(0) + "' в подсистеме '"
+                            + ((Configurations) conflist.get(index - 1)).title + "' логгирование включено";
+                    loggit(Level.INFO, (String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
+                    
                 }
             }
         }
@@ -315,9 +321,10 @@ public class SystemPanel
         }
 
         ((Configurations) this.conflist.get(this.index - 1)).Add(nm);
-        this.logger.log(Level.INFO, "Добавлено новое устройство '" + nm + "' в подсистему '"
-                + ((Configurations) this.conflist.get(this.index - 1)).title + "'");
         CreatingAddresses(nm, true, true);
+        String msg = "Добавлено новое устройство '" + nm + "' в подсистему '"
+                + ((Configurations) this.conflist.get(this.index - 1)).title + "'";
+        loggit(Level.INFO,nm , msg);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -350,8 +357,8 @@ public class SystemPanel
                     + ((ArrayList<String>) ((Configurations) this.conflist.get(this.index - 1)).devices
                             .get(this.rowindex)).get(0)
                     + "' из подсистемы '" + ((Configurations) this.conflist.get(this.index - 1)).title + "'";
-            loggit(Level.INFO,((ArrayList<String>) ((Configurations) this.conflist.get(this.index - 1)).devices
-                            .get(this.rowindex)).get(0),msg);
+            loggit(Level.INFO, ((ArrayList<String>) ((Configurations) this.conflist.get(this.index - 1)).devices
+                    .get(this.rowindex)).get(0), msg);
             ((Configurations) this.conflist.get(this.index - 1)).DeleteAd(this.rowindex);
         } else {
             return;
@@ -376,7 +383,7 @@ public class SystemPanel
     }
 
     private void loggit(Level lv, String nm, String msg) {
-        if ((boolean) ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).get(2)){
+        if ((boolean) ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).get(2)) {
             this.logger.log(lv, msg);
         }
     }
@@ -488,9 +495,6 @@ public class SystemPanel
 
                 if (((Boolean) this.jTable1.getValueAt(i, 4)).booleanValue() == true) {
                     if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.RED) {
-                        this.logger.log(Level.INFO,
-                                "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
-                                + " устройства с поднятым флагом \"Крит\" перестали отвечать");
                         Toolkit.getDefaultToolkit().beep();
                     }
                     ((Configurations) this.conflist.get(this.index - 1)).condition = Color.RED;
@@ -501,19 +505,11 @@ public class SystemPanel
         }
 
         if (green_flag == ((Configurations) this.conflist.get(this.index - 1)).devices.size()) {
-            if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.GREEN) {
-                this.logger.log(Level.INFO, "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
-                        + " все устройства с поднятым флагом \"Крит\" отвечают");
-            }
             ((Configurations) this.conflist.get(this.index - 1)).condition = Color.GREEN;
 
             return;
         }
         if (red_count == red_flag) {
-            if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.YELLOW) {
-                this.logger.log(Level.INFO, "В подсистеме " + ((Configurations) this.conflist.get(this.index - 1)).title
-                        + " нет устройств с поднятым флагом \"Крит\", имеющих проблем");
-            }
             ((Configurations) this.conflist.get(this.index - 1)).condition = Color.YELLOW;
             return;
         }

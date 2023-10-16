@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.Toolkit;
+import javax.swing.JFrame;
 
 /**
  *
@@ -347,6 +348,7 @@ public class SystemPanel
         LogView logView = new LogView();
         logView.loadLogs(subsystemName);
         logView.setVisible(true);
+        logView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(ActionEvent evt) {

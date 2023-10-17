@@ -40,6 +40,8 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 /**
  *
@@ -75,15 +77,24 @@ public class MyFrame extends javax.swing.JFrame {
         logger.info("Start");
         this.md = (DefaultTableModel) this.jTable2.getModel();
         this.jTable2.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent evt) {
-                int row = MyFrame.this.jTable2.rowAtPoint(evt.getPoint());
-                if (row >= 0) {
-                    MyFrame.this.rowindex = row;
-                    MyFrame.this.jButton2.setEnabled(true);
-                    MyFrame.this.jButton3.setEnabled(true);
+                if (evt.getSource() == jTable2) {
+                    int row = MyFrame.this.jTable2.rowAtPoint(evt.getPoint());
+                    if (row >= 0) {
+                        MyFrame.this.rowindex = row;
+                        MyFrame.this.jButton2.setEnabled(true);
+                        MyFrame.this.jButton3.setEnabled(true);
+                    }
+                    System.out.println("1111");
+                } else if (evt.getSource() != jTable2) {
+                    jTable2.clearSelection();
+                    System.out.println("0000");
                 }
+
             }
 
+            @Override
             public void mousePressed(MouseEvent mouseEvent) {
                 JTable table = (JTable) mouseEvent.getSource();
                 Point point = mouseEvent.getPoint();
@@ -270,7 +281,7 @@ public class MyFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         int interval;
         String input = JOptionPane.showInputDialog(this, "Введите интервал времени в секундах:",
@@ -372,6 +383,8 @@ public class MyFrame extends javax.swing.JFrame {
             for (Configurations config : this.conflist) {
                 this.conflist_check.add(config.clone());
             }
+
+            this.currentFile = fileChooser.getSelectedFile();
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -479,6 +492,7 @@ public class MyFrame extends javax.swing.JFrame {
             this.conflist.remove(this.rowindex);
             this.md.removeRow(this.rowindex);
             this.jButton2.setEnabled(false);
+            this.jButton3.setEnabled(false);
             updateTable();
         } else {
             return;
@@ -549,7 +563,7 @@ public class MyFrame extends javax.swing.JFrame {
         }
 
         logger.log(Level.INFO, "Подсистема была переименована с '"
-            + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
+                + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
         ((Configurations) this.conflist.get(this.rowindex)).title = nm;
         this.jTabbedPane1.setTitleAt(this.rowindex + 1, nm);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -581,10 +595,10 @@ public class MyFrame extends javax.swing.JFrame {
                     boolean hasFocus,
                     int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                table.setValueAt(((Configurations) MyFrame.this.conflist.get(row)).title, row, 0);
-                if (((Configurations) MyFrame.this.conflist.get(row)).title == table.getValueAt(row, 0)) {
+                if (table.getColumnName(column) == "Подсистемы") {
+                    table.setValueAt(((Configurations) MyFrame.this.conflist.get(row)).title, row, column);
+                } else {
                     c.setBackground(((Configurations) MyFrame.this.conflist.get(row)).condition);
-                    return c;
                 }
                 return c;
             }
@@ -595,7 +609,6 @@ public class MyFrame extends javax.swing.JFrame {
         jPanel1.repaint();
         jPanel1.revalidate();
     }
-
 
     public void OpenWasClicked() {
         this.model = new ArrayList<>();

@@ -263,15 +263,9 @@ public class SystemPanel
                 String columnName = tmodel.getColumnName(column);
                 Boolean checked = (Boolean) tmodel.getValueAt(row, column);
                 if (!checked.booleanValue()) {
-                    String msg = "Снят флаг критичности для устройства " + ((Configurations) conflist
-                            .get(index - 1)).devices.get(row).get(0);
-                    loggit(Level.INFO, (String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
                     ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
                             .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(false));
                 } else {
-                    String msg = "Установлен флаг критичности для устройства " + ((Configurations) conflist
-                            .get(index - 1)).devices.get(row).get(0);
-                    loggit(Level.INFO, (String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
                     ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
                             .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(true));
                 }
@@ -281,18 +275,12 @@ public class SystemPanel
                 String columnName = tmodel.getColumnName(column);
                 Boolean checked = (Boolean) tmodel.getValueAt(row, column);
                 if (!checked.booleanValue()) {
-                    String msg = "У устройства '" + ((Configurations) conflist.get(index - 1)).devices.get(row).get(0) + "' в подсистеме '"
-                            + ((Configurations) conflist.get(index - 1)).title + "' логгирование отключено";
-                    loggit(Level.INFO, (String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
                     ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
                             .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, Boolean.valueOf(false));
                 } else {
                     ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
                             .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, Boolean.valueOf(true));
-                    String msg = "У устройства '" + ((Configurations) conflist.get(index - 1)).devices.get(row).get(0) + "' в подсистеме '"
-                            + ((Configurations) conflist.get(index - 1)).title + "' логгирование включено";
-                    loggit(Level.INFO, (String) ((Configurations) conflist.get(index - 1)).devices.get(row).get(0), msg);
-                    
+
                 }
             }
         }
@@ -325,7 +313,7 @@ public class SystemPanel
         CreatingAddresses(nm, true, true);
         String msg = "Добавлено новое устройство '" + nm + "' в подсистему '"
                 + ((Configurations) this.conflist.get(this.index - 1)).title + "'";
-        loggit(Level.INFO,nm , msg);
+        loggit(Level.INFO, nm, msg);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -376,7 +364,6 @@ public class SystemPanel
                 if (st_val == "ON") {
                     c.setBackground(Color.GREEN);
                 } else {
-
                     c.setBackground(Color.RED);
                 }
                 return c;
@@ -416,7 +403,6 @@ public class SystemPanel
                     String msg = "У устройства '" + nm
                             + "' изменился статус c 'Нет связи с устройством' на '" + status + "'";
                     loggit(Level.INFO, nm, msg);
-
                 }
                 status = "Нет связи с устройством";
             } else {
@@ -428,10 +414,19 @@ public class SystemPanel
                 status = "Нет устройства с таким адресом";
             }
 
+            if (state != "no conn." && !((boolean) ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).get(1))){
+                beepBeep();
+            }
+            
             state = "no conn.";
         }
 
         return new String[]{status, state};
+    }
+
+    public void beepBeep() {
+        Toolkit.getDefaultToolkit().beep();
+        
     }
 
     private void ChangingAdress(DefaultTableModel dm, String nm) {
@@ -497,7 +492,7 @@ public class SystemPanel
 
                 if (((Boolean) this.jTable1.getValueAt(i, 4)).booleanValue() == true) {
                     if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.RED) {
-                        Toolkit.getDefaultToolkit().beep();
+
                     }
                     ((Configurations) this.conflist.get(this.index - 1)).condition = Color.RED;
                     return;

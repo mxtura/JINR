@@ -245,6 +245,12 @@ public class SystemPanel
     public void run() {
         CalcOfCondition();
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
+            
+            //System.out.println(this.jTable1.getModel().getValueAt(i,0) + " " + this.jTable1.getModel().getValueAt(i,2) + " " + CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] + " " + !((boolean)this.jTable1.getModel().getValueAt(i,4)));
+            System.out.println(((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).get(3));
+            if (this.jTable1.getModel().getValueAt(i,2) != CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] && !((boolean)this.jTable1.getModel().getValueAt(i,4))){
+                beepBeep();
+            }
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
                     i, 2);
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[0],
@@ -378,11 +384,13 @@ public class SystemPanel
     }
 
     public void CreatingAddresses(String nm, boolean cr, boolean lg) {
-        String status = CheckingAdress(nm)[0];
-        String state = CheckingAdress(nm)[1];
+        String[] cha = CheckingAdress(nm);
+        String status = cha[0];
+        String state = cha[1];
 
         Object[] data = {nm, "", state, status, Boolean.valueOf(cr), Boolean.valueOf(lg)};
-
+        
+        ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).set(3,state);
         ((DefaultTableModel) this.model.get(this.index - 1)).addRow(data);
     }
 
@@ -413,20 +421,16 @@ public class SystemPanel
                 }
                 status = "Нет устройства с таким адресом";
             }
-
-            if (state != "no conn." && !((boolean) ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).get(1))){
-                beepBeep();
-            }
             
             state = "no conn.";
         }
-
+        
         return new String[]{status, state};
     }
 
     public void beepBeep() {
         Toolkit.getDefaultToolkit().beep();
-        
+        System.out.println("1111");
     }
 
     private void ChangingAdress(DefaultTableModel dm, String nm) {

@@ -281,3 +281,38 @@
 2023-10-16 16:46:46 [INFO   ] jtabbedpane.MyFrame - Start 
 2023-10-16 17:28:12 [INFO   ] jtabbedpane.MyFrame - Start 
 2023-10-16 17:28:28 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:35:54 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:37:49 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:39:58 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:40:20 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:41:32 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:44:55 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:47:12 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:47:56 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-20 23:48:21 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 00:01:45 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 00:03:43 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 00:04:29 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 00:05:54 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 00:07:10 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 00:08:21 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 00:08:55 [INFO   ] jtabbedpane.MyFrame - Устройство 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' было изменено на '11' 
+2023-10-21 00:11:50 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 00:13:22 [INFO   ] jtabbedpane.MyFrame - Устройство 'diagnostics/websocket/bergoz1' в подсистеме 'ТСистем 2' было изменено на '111' 
+2023-10-21 01:08:24 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 01:09:08 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 01:09:21 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 01:15:01 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 01:16:06 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 01:16:19 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 01:16:47 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'efaw' в подсистему 'ТСистем 2' 
+2023-10-21 01:17:02 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'diagnostics/websocket/bergozframe1' в подсистему 'ТСистем 2' 
+2023-10-21 01:17:18 [INFO   ] jtabbedpane.MyFrame - Устройство 'efaw' в подсистеме 'ТСистем 2' было изменено на 'diagnostics/websocket/bergozframe1' 
+2023-10-21 01:18:54 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 01:19:20 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-21 01:20:36 [INFO   ] jtabbedpane.MyFrame - Устройство 'noaddress' в подсистеме 'фиктивная система' было изменено на 'diagnostics/websocket/bergozframe1' 
+2023-10-21 01:21:08 [INFO   ] jtabbedpane.MyFrame - Добавлено новое устройство 'fdww' в подсистему 'ТСистем 2' 
+2023-10-21 01:21:26 [INFO   ] jtabbedpane.MyFrame - Устройство 'fdww' в подсистеме 'ТСистем 2' было изменено на 'diagnostics/websocket/bergozframe1' 
+2023-10-21 01:21:38 [INFO   ] jtabbedpane.MyFrame - Устройство 'diagnostics/websocket/bergozframe1' в подсистеме 'ТСистем 2' было изменено на '11' 
+2023-10-21 01:22:00 [INFO   ] jtabbedpane.MyFrame - Устройство '11' в подсистеме 'ТСистем 2' было изменено на 'diagnostics/websocket/bergozframe1' 
+2023-10-21 16:19:52 [INFO   ] jtabbedpane.MyFrame - Start 

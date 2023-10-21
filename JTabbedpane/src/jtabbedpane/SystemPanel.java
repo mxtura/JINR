@@ -245,10 +245,10 @@ public class SystemPanel
     public void run() {
         CalcOfCondition();
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
-            
+
             //System.out.println(this.jTable1.getModel().getValueAt(i,0) + " " + this.jTable1.getModel().getValueAt(i,2) + " " + CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] + " " + !((boolean)this.jTable1.getModel().getValueAt(i,4)));
             System.out.println(((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).get(3));
-            if (this.jTable1.getModel().getValueAt(i,2) != CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] && !((boolean)this.jTable1.getModel().getValueAt(i,4))){
+            if (this.jTable1.getModel().getValueAt(i, 2) != CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] && !((boolean) this.jTable1.getModel().getValueAt(i, 4))) {
                 beepBeep();
             }
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
@@ -294,8 +294,26 @@ public class SystemPanel
 
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nm = JOptionPane.showInputDialog(this, "Введите адрес устройства");
+
         if (nm == null || nm.length() <= 0) {
             return;
+        }
+        
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            String existingName = (String) jTable1.getValueAt(i, 0);
+            if (nm.equals(existingName)) {
+                Object[] options = {"Ввести другое", "Отмена"};
+                int n = JOptionPane.showOptionDialog(this, "Это устройство уже есть в подсистеме",
+                        "Ошибка", 1, 3, null, options, options[1]);
+
+                if (n == 0) {
+                    jButton1ActionPerformed(evt);
+                    return;
+                }
+                if (n == 1) {
+                    return;
+                }
+            }
         }
 
         try {
@@ -325,10 +343,28 @@ public class SystemPanel
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         DefaultTableModel dm = (DefaultTableModel) this.jTable1.getModel();
         String nm = JOptionPane.showInputDialog(this, "Введите адрес устройства", dm.getValueAt(this.rowindex, 0));
-
+        
         if (nm == null || nm.length() <= 0) {
             return;
         }
+        
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            String existingName = (String) jTable1.getValueAt(i, 0);
+            if (nm.equals(existingName)) {
+                Object[] options = {"Ввести другое", "Отмена"};
+                int n = JOptionPane.showOptionDialog(this, "Это устройство уже есть в подсистеме",
+                        "Ошибка", 1, 3, null, options, options[1]);
+
+                if (n == 0) {
+                    jButton1ActionPerformed(evt);
+                    return;
+                }
+                if (n == 1) {
+                    return;
+                }
+            }
+        }
+        
         String msg = "Устройство '" + dm.getValueAt(this.rowindex, 0) + "' в подсистеме '"
                 + ((Configurations) this.conflist.get(this.index - 1)).title + "' было изменено на '" + nm + "'";
         loggit(Level.INFO, (String) dm.getValueAt(this.rowindex, 0), msg);
@@ -389,8 +425,8 @@ public class SystemPanel
         String state = cha[1];
 
         Object[] data = {nm, "", state, status, Boolean.valueOf(cr), Boolean.valueOf(lg)};
-        
-        ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).set(3,state);
+
+        ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).set(3, state);
         ((DefaultTableModel) this.model.get(this.index - 1)).addRow(data);
     }
 
@@ -421,10 +457,10 @@ public class SystemPanel
                 }
                 status = "Нет устройства с таким адресом";
             }
-            
+
             state = "no conn.";
         }
-        
+
         return new String[]{status, state};
     }
 
@@ -475,6 +511,17 @@ public class SystemPanel
     public void OpenConfig() {
         for (ArrayList<Object> al : ((Configurations) this.conflist.get(this.index - 1)).devices) {
             String n1 = (String) al.get(0);
+            boolean f = true;
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                String value = (String) jTable1.getValueAt(i, 0);
+                if (value.equals(n1)) {
+                    f = false;
+                    break;
+                }
+
+            }
+            if (!f)
+                continue;
             boolean n2 = (boolean) al.get(1);
             boolean n3 = (boolean) al.get(2);
             CreatingAddresses(n1, n2, n3);

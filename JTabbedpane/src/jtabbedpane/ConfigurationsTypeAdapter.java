@@ -58,7 +58,7 @@ public class ConfigurationsTypeAdapter extends TypeAdapter<Configurations> {
                                 innerList.add(in.nextString());
                             } else if (name.equals("critical")) {
                                 innerList.add(in.nextBoolean());
-                            } else if (name.equals("logs_on")){
+                            } else if (name.equals("logs_on")) {
                                 innerList.add(in.nextBoolean());
                             }
                         }

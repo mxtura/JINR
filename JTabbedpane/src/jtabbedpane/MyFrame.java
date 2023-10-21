@@ -483,6 +483,23 @@ public class MyFrame extends javax.swing.JFrame {
             return;
         }
 
+        for (int i = 0; i < jTable2.getRowCount(); i++) {
+            String existingName = (String) jTable2.getValueAt(i, 0);
+            if (nm.equals(existingName)) {
+                Object[] options = {"¬вести другое", "ќтмена"};
+                int n = JOptionPane.showOptionDialog(this, "Ёто устройство уже есть в подсистеме",
+                        "ќшибка", 1, 3, null, options, options[1]);
+
+                if (n == 0) {
+                    jButton1ActionPerformed(evt);
+                    return;
+                }
+                if (n == 1) {
+                    return;
+                }
+            }
+        }
+
         Configurations conf = new Configurations(nm);
         this.conflist.add(conf);
 
@@ -515,8 +532,26 @@ public class MyFrame extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String nm = JOptionPane.showInputDialog(this, "¬ведите название подсистемы");
+
         if (nm == null || nm.length() <= 0) {
             return;
+        }
+
+        for (int i = 0; i < jTable2.getRowCount(); i++) {
+            String existingName = (String) jTable2.getValueAt(i, 0);
+            if (nm.equals(existingName)) {
+                Object[] options = {"¬вести другое", "ќтмена"};
+                int n = JOptionPane.showOptionDialog(this, "Ёто устройство уже есть в подсистеме",
+                        "ќшибка", 1, 3, null, options, options[1]);
+
+                if (n == 0) {
+                    jButton1ActionPerformed(evt);
+                    return;
+                }
+                if (n == 1) {
+                    return;
+                }
+            }
         }
 
         List<String> logLines = new ArrayList<>();
@@ -583,7 +618,7 @@ public class MyFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     protected void processWindowEvent(WindowEvent we) {

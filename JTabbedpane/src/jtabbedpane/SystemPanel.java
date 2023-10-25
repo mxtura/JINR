@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -43,6 +44,7 @@ public class SystemPanel
     List<Configurations> conflist;
     ArrayList<DefaultTableModel> model;
     private Logger logger;
+    public List<String> beepList = new ArrayList<>();
 
     public SystemPanel(List<Configurations> conflist, ArrayList<DefaultTableModel> model, Logger logger) {
         initComponents();
@@ -247,10 +249,11 @@ public class SystemPanel
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
 
             //System.out.println(this.jTable1.getModel().getValueAt(i,0) + " " + this.jTable1.getModel().getValueAt(i,2) + " " + CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] + " " + !((boolean)this.jTable1.getModel().getValueAt(i,4)));
-            System.out.println(((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).get(3));
-            if (this.jTable1.getModel().getValueAt(i, 2) != CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] && !((boolean) this.jTable1.getModel().getValueAt(i, 4))) {
-                beepBeep();
+            String old_state = (String) ((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).get(3);
+            if (old_state != CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] && !((boolean) this.jTable1.getModel().getValueAt(i, 4))) {
+                beepBeep((String) this.jTable1.getModel().getValueAt(i, 2), ((Configurations) this.conflist.get(this.index - 1)).title);
             }
+            ((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).set(3, CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1]);
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
                     i, 2);
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[0],
@@ -298,7 +301,7 @@ public class SystemPanel
         if (nm == null || nm.length() <= 0) {
             return;
         }
-        
+
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             String existingName = (String) jTable1.getValueAt(i, 0);
             if (nm.equals(existingName)) {
@@ -343,11 +346,11 @@ public class SystemPanel
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         DefaultTableModel dm = (DefaultTableModel) this.jTable1.getModel();
         String nm = JOptionPane.showInputDialog(this, "Введите адрес устройства", dm.getValueAt(this.rowindex, 0));
-        
+
         if (nm == null || nm.length() <= 0) {
             return;
         }
-        
+
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             String existingName = (String) jTable1.getValueAt(i, 0);
             if (nm.equals(existingName)) {
@@ -364,7 +367,7 @@ public class SystemPanel
                 }
             }
         }
-        
+
         String msg = "Устройство '" + dm.getValueAt(this.rowindex, 0) + "' в подсистеме '"
                 + ((Configurations) this.conflist.get(this.index - 1)).title + "' было изменено на '" + nm + "'";
         loggit(Level.INFO, (String) dm.getValueAt(this.rowindex, 0), msg);
@@ -425,7 +428,6 @@ public class SystemPanel
         String state = cha[1];
 
         Object[] data = {nm, "", state, status, Boolean.valueOf(cr), Boolean.valueOf(lg)};
-
         ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).set(3, state);
         ((DefaultTableModel) this.model.get(this.index - 1)).addRow(data);
     }
@@ -464,9 +466,13 @@ public class SystemPanel
         return new String[]{status, state};
     }
 
-    public void beepBeep() {
+    public void beepBeep(String dev, String ttl) {
         Toolkit.getDefaultToolkit().beep();
-        System.out.println("1111");
+        beepList.add("Устройство " + dev + " в подсистеме " + ttl + " отключилось");
+        SwingUtilities.invokeLater(() -> {
+            MyFrame.getButton().setEnabled(true);
+        });
+
     }
 
     private void ChangingAdress(DefaultTableModel dm, String nm) {
@@ -520,8 +526,9 @@ public class SystemPanel
                 }
 
             }
-            if (!f)
+            if (!f) {
                 continue;
+            }
             boolean n2 = (boolean) al.get(1);
             boolean n3 = (boolean) al.get(2);
             CreatingAddresses(n1, n2, n3);

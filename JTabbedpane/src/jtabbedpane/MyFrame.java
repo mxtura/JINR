@@ -42,6 +42,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import javax.swing.JButton;
 
 /**
  *
@@ -61,6 +62,8 @@ public class MyFrame extends javax.swing.JFrame {
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(21);
     private static final Logger logger = Logger.getLogger(MyFrame.class.getName());
     private static Handler fileHandler;
+
+    private List<List> beepsLists = new ArrayList<>();
 
     static {
         System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF %1$tT [%4$-7s] %3$s - %5$s %n");
@@ -507,6 +510,7 @@ public class MyFrame extends javax.swing.JFrame {
 
         SystemPanel sp = new SystemPanel(this.conflist, this.model, logger);
         this.jTabbedPane1.addTab(nm, sp);
+        beepsLists.add(sp.beepList);
         this.jTabbedPane1.setSelectedIndex(this.jTabbedPane1.getTabCount() - 1);
         sp.index = this.jTabbedPane1.getSelectedIndex();
         scheduler.scheduleAtFixedRate(sp, 0L, deviceCheckInterval, TimeUnit.SECONDS);
@@ -618,7 +622,15 @@ public class MyFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+        String devs = "";
+        for (List beep : beepsLists) {
+            for (Object str : beep) {
+                devs += str + "\n";
+            }
+        }
+        int option = JOptionPane.showConfirmDialog(this, devs,
+                "Устройства отключены", 1);
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     protected void processWindowEvent(WindowEvent we) {
@@ -668,14 +680,21 @@ public class MyFrame extends javax.swing.JFrame {
         this.comp = this.jTabbedPane1.getComponentAt(0);
         this.jTabbedPane1.removeAll();
         this.jTabbedPane1.add(this.comp, "Сводка");
+        beepsLists.clear();
         for (Configurations con : this.conflist) {
             this.md.addRow(new Object[]{con.title});
             SystemPanel sp = new SystemPanel(this.conflist, this.model, logger);
             this.jTabbedPane1.addTab(con.title, sp);
+            beepsLists.add(sp.beepList);
             sp.index = this.jTabbedPane1.getTabCount() - 1;
+
             sp.OpenConfig();
             scheduler.scheduleAtFixedRate(sp, 0L, deviceCheckInterval, TimeUnit.SECONDS);
         }
+    }
+    
+    public static JButton getButton(){
+        return jButton4;
     }
 
     /**
@@ -732,7 +751,7 @@ public class MyFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private static javax.swing.JButton jButton4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

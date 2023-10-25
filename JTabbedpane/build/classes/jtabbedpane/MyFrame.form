@@ -56,6 +56,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem5ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem1">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="&#x417;&#x432;&#x443;&#x43a;&#x43e;&#x432;&#x43e;&#x435; &#x43e;&#x43f;&#x43e;&#x432;&#x435;&#x449;&#x435;&#x43d;&#x438;&#x435;"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+              </AuxValues>
+            </MenuItem>
           </SubComponents>
         </Menu>
       </SubComponents>

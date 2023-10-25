@@ -324,6 +324,7 @@ public class SystemPanel
             DeviceInfo deviceInfo = db.get_device_info(nm);
         } catch (DevFailed e) {
             Object[] options = {"Оставить", "Изменить", "Отмена"};
+            
             int n = JOptionPane.showOptionDialog(this, "Этого адреса нет в базе. Вы точно хотите ввести этот адрес?",
                     "Ошибка", 1, 3, null, options, options[2]);
 
@@ -334,6 +335,7 @@ public class SystemPanel
             if (n == 2) {
                 return;
             }
+            
         }
 
         ((Configurations) this.conflist.get(this.index - 1)).Add(nm);
@@ -428,6 +430,7 @@ public class SystemPanel
         String state = cha[1];
 
         Object[] data = {nm, "", state, status, Boolean.valueOf(cr), Boolean.valueOf(lg)};
+        beepBeep(nm, ((Configurations) this.conflist.get(this.index - 1)).title);
         ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).set(3, state);
         ((DefaultTableModel) this.model.get(this.index - 1)).addRow(data);
     }
@@ -467,10 +470,10 @@ public class SystemPanel
     }
 
     public void beepBeep(String dev, String ttl) {
-        Toolkit.getDefaultToolkit().beep();
         beepList.add("Устройство " + dev + " в подсистеме " + ttl + " отключилось");
         SwingUtilities.invokeLater(() -> {
             MyFrame.getButton().setEnabled(true);
+            MyFrame.setTimer(true);
         });
 
     }

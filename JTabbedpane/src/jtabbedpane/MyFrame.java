@@ -43,6 +43,8 @@ import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.Timer;
 
 /**
  *
@@ -65,12 +67,20 @@ public class MyFrame extends javax.swing.JFrame {
 
     private List<List> beepsLists = new ArrayList<>();
 
+    public static Timer timer;
+
     static {
         System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF %1$tT [%4$-7s] %3$s - %5$s %n");
     }
 
     public MyFrame() throws IOException {
         initComponents();
+
+        timer = new Timer(2000, e -> {
+            if (jCheckBoxMenuItem1.getState()) {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        });
 
         fileHandler = new FileHandler("logs.log", true);
         fileHandler.setFormatter(new SimpleFormatter());
@@ -130,6 +140,7 @@ public class MyFrame extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Мониторинг подсистем TANGO");
@@ -278,6 +289,10 @@ public class MyFrame extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem5);
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("Звуковое оповещение");
+        jMenu2.add(jCheckBoxMenuItem1);
 
         jMenuBar1.add(jMenu2);
 
@@ -628,9 +643,22 @@ public class MyFrame extends javax.swing.JFrame {
                 devs += str + "\n";
             }
         }
-        int option = JOptionPane.showConfirmDialog(this, devs,
-                "Устройства отключены", 1);
-        
+        setTimer(false);
+
+        Object[] options = {"Ok", "Cancel"};
+
+        int optionq = JOptionPane.showOptionDialog(
+                this,
+                devs,
+                "Устройства отключены",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+        jButton4.setEnabled(false);
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     protected void processWindowEvent(WindowEvent we) {
@@ -692,9 +720,17 @@ public class MyFrame extends javax.swing.JFrame {
             scheduler.scheduleAtFixedRate(sp, 0L, deviceCheckInterval, TimeUnit.SECONDS);
         }
     }
-    
-    public static JButton getButton(){
+
+    public static JButton getButton() {
         return jButton4;
+    }
+
+    public static void setTimer(boolean bl) {
+        if (bl) {
+            timer.start();
+        } else {
+            timer.stop();
+        }
     }
 
     /**
@@ -752,6 +788,7 @@ public class MyFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private static javax.swing.JButton jButton4;
+    private static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

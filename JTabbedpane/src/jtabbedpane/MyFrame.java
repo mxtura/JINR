@@ -1,5 +1,6 @@
 package jtabbedpane;
 
+import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.awt.Component;
@@ -42,6 +43,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.nio.charset.StandardCharsets;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.Timer;
@@ -66,6 +68,8 @@ public class MyFrame extends javax.swing.JFrame {
     private static Handler fileHandler;
 
     private List<List> beepsLists = new ArrayList<>();
+
+    private String originalConfigHash;
 
     public static Timer timer;
 
@@ -213,7 +217,7 @@ public class MyFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(175, 551, Short.MAX_VALUE))
+                .addGap(175, 529, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -347,7 +351,9 @@ public class MyFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        if (this.currentFile == null || this.conflist.isEmpty() || !this.conflist_check.equals(this.conflist)) {
+        String currentHash = calculateHash(conflist);
+        
+        if (this.currentFile == null || this.conflist.isEmpty() || !currentHash.equals(originalConfigHash)) {
             int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
                     "Подтверждение сохранения", 1);
             if (option == 0) {
@@ -411,10 +417,7 @@ public class MyFrame extends javax.swing.JFrame {
                 logger.log(Level.SEVERE, (Supplier<String>) ex);
             }
 
-            this.conflist_check = new ArrayList<>();
-            for (Configurations config : this.conflist) {
-                this.conflist_check.add(config.clone());
-            }
+            originalConfigHash = calculateHash(conflist); 
 
             this.currentFile = fileChooser.getSelectedFile();
         }
@@ -446,10 +449,7 @@ public class MyFrame extends javax.swing.JFrame {
                 logger.log(Level.SEVERE, (Supplier<String>) ex);
             }
 
-            this.conflist_check = new ArrayList<>();
-            for (Configurations config : this.conflist) {
-                this.conflist_check.add(config.clone());
-            }
+            originalConfigHash = calculateHash(conflist); 
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -476,10 +476,8 @@ public class MyFrame extends javax.swing.JFrame {
                 Reader reader = Files.newBufferedReader(file.toPath());
                 this.conflist = new ArrayList<>(
                         Arrays.asList((Configurations[]) gson.fromJson(reader, Configurations[].class)));
-                this.conflist_check = new ArrayList<>();
-                for (Configurations config : this.conflist) {
-                    this.conflist_check.add(config.clone());
-                }
+
+                originalConfigHash = calculateHash(conflist);
 
                 reader.close();
                 DefaultTableModel dtm = (DefaultTableModel) this.jTable2.getModel();
@@ -634,6 +632,7 @@ public class MyFrame extends javax.swing.JFrame {
                 + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
         ((Configurations) this.conflist.get(this.rowindex)).title = nm;
         this.jTabbedPane1.setTitleAt(this.rowindex + 1, nm);
+        this.jTable2.setValueAt(nm, this.rowindex, 0);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -663,12 +662,13 @@ public class MyFrame extends javax.swing.JFrame {
 
     protected void processWindowEvent(WindowEvent we) {
         if (we.getID() == 201) {
-            if (this.conflist.isEmpty() && this.conflist_check.isEmpty()) {
+            if (this.conflist.isEmpty() && originalConfigHash == null) {
                 scheduler.shutdown();
                 super.processWindowEvent(we);
                 return;
             }
-            if (this.currentFile == null || this.conflist.isEmpty() || !this.conflist_check.equals(this.conflist)) {
+            String currentHash = calculateHash(conflist);
+            if (this.currentFile == null || this.conflist.isEmpty() || !currentHash.equals(originalConfigHash)) {
                 int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
                         "Подтверждение сохранения", 1);
                 if (option == 0) {
@@ -731,6 +731,12 @@ public class MyFrame extends javax.swing.JFrame {
         } else {
             timer.stop();
         }
+    }
+
+    private String calculateHash(List<Configurations> configs) {
+        return Hashing.sha256()
+                .hashString(configs.toString(), StandardCharsets.UTF_8)
+                .toString();
     }
 
     /**

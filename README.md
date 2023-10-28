@@ -1,3 +1,2 @@
 # JINR
 Monitoring TANGO subsystems
-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

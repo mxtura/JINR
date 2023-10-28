@@ -7,10 +7,16 @@ package jtabbedpane;
 import java.awt.EventQueue;
 import java.awt.TextArea;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -86,6 +92,67 @@ public class LogView extends JFrame {
         }
     }
 
+    public FileHandler editLogs(FileHandler fileHandler, String oldName, String newName) {
+        List<String> logLines = new ArrayList<>();
+
+        try {
+            Scanner scanner = new Scanner(new File("logs.log"));
+            try {
+                while (scanner.hasNextLine()) {
+                    logLines.add(scanner.nextLine());
+                }
+                scanner.close();
+            } catch (Throwable throwable) {
+                try {
+                    scanner.close();
+                } catch (Throwable throwable1) {
+                    throwable.addSuppressed(throwable1);
+                }
+                throw throwable;
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, ex);
+        }
+
+        for (int i = 0; i < logLines.size(); i++) {
+            String line = logLines.get(i);
+            line = line.replace(oldName,newName);
+            logLines.set(i, line);
+        }
+        fileHandler.close();
+
+        try {
+            PrintWriter writer = new PrintWriter(new File("logs.log"));
+            try {
+                for (String line : logLines) {
+                    writer.println(line);
+                }
+                writer.close();
+            } catch (Throwable throwable) {
+                try {
+                    writer.close();
+                } catch (Throwable throwable1) {
+                    throwable.addSuppressed(throwable1);
+                }
+                throw throwable;
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, ex);
+        }
+
+        try {
+            fileHandler = new FileHandler("logs.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
+        }
+        
+        return fileHandler;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -106,19 +173,16 @@ public class LogView extends JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LogView.class.getName()).log(Level.SEVERE, (String) null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(LogView.class.getName()).log(Level.SEVERE, (String) null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(LogView.class.getName()).log(Level.SEVERE, (String) null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(LogView.class.getName()).log(Level.SEVERE, (String) null, ex);
         }
         // </editor-fold>
 
+        // </editor-fold>
+
         /* Create and display the form */
         EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new LogView().setVisible(true);
             }

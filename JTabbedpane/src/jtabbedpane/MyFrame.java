@@ -3,6 +3,8 @@ package jtabbedpane;
 import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Point;
@@ -41,35 +43,32 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Toolkit;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.nio.charset.StandardCharsets;
 import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
 import javax.swing.Timer;
 
 /**
  *
  * @author mxtur
  */
-public class MyFrame extends javax.swing.JFrame {
+public final class MyFrame extends javax.swing.JFrame {
 
     Component comp;
     DefaultTableModel md;
     List<Configurations> conflist = new ArrayList<>();
-    List<Configurations> conflist_check = new ArrayList<>();
     ArrayList<DefaultTableModel> model = new ArrayList<>();
     int rowindex;
     private static int deviceCheckInterval = 4;
 
-    private File currentFile;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(21);
     private static final Logger logger = Logger.getLogger(MyFrame.class.getName());
     private static Handler fileHandler;
 
-    private List<List> beepsLists = new ArrayList<>();
+    private final List<List> beepsLists = new ArrayList<>();
 
-    private String originalConfigHash;
+    private FileService fileService;
+    private LogView logView;
 
     public static Timer timer;
 
@@ -85,6 +84,9 @@ public class MyFrame extends javax.swing.JFrame {
                 Toolkit.getDefaultToolkit().beep();
             }
         });
+
+        fileService = new FileService(this);
+        logView = new LogView();
 
         fileHandler = new FileHandler("logs.log", true);
         fileHandler.setFormatter(new SimpleFormatter());
@@ -250,6 +252,7 @@ public class MyFrame extends javax.swing.JFrame {
 
         jMenu1.setText("Файл");
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem2.setText("Открыть конфигурацию");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,6 +261,7 @@ public class MyFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setText("Сохранить конфигурацию");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,6 +270,7 @@ public class MyFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem3.setText("Сохранить конфигурацию как");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,6 +279,7 @@ public class MyFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem3);
 
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
         jMenuItem4.setText("Выход");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,10 +324,27 @@ public class MyFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
+    protected void processWindowEvent(WindowEvent we) {
+        if (we.getID() == WindowEvent.WINDOW_CLOSING) {
+            if ((!(fileService.calculateHash(conflist)).equals(fileService.originalConfigHash) && fileService.originalConfigHash != null)) {
+                int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
+                        "Подтверждение сохранения", 1);
+                if (option == 0) {
+                    fileService.saveFile(conflist);
+                } else if (option == 2) {
+                    return;
+                }
+            }
+            scheduler.shutdown();
+            super.processWindowEvent(we);
+
+        }
+    }
+
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         int interval;
-        String input = JOptionPane.showInputDialog(this, "Введите интервал времени в секундах:",
-                Integer.valueOf(deviceCheckInterval));
+        String input = JOptionPane.showInputDialog(this, "Введите интервал времени в секундах:", deviceCheckInterval);
 
         if (input == null) {
             return;
@@ -351,145 +374,38 @@ public class MyFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        String currentHash = calculateHash(conflist);
-        
-        if (this.currentFile == null || this.conflist.isEmpty() || !currentHash.equals(originalConfigHash)) {
+        if ((!(fileService.calculateHash(conflist)).equals(fileService.originalConfigHash) && fileService.originalConfigHash != null)) {
             int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
                     "Подтверждение сохранения", 1);
             if (option == 0) {
-                jMenuItem1ActionPerformed((ActionEvent) null);
+                fileService.saveFile(conflist);
             } else if (option == 2) {
                 return;
             }
         }
         scheduler.shutdown();
         System.exit(0);
+
+
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        JFileChooser fileChooser = new JFileChooser(".");
-
-        fileChooser.setFileFilter(new FileFilter() {
-            public boolean accept(File f) {
-                if (f.getName().endsWith("json") || f.isDirectory()) {
-                    return true;
-                }
-                return false;
-            }
-
-            public String getDescription() {
-                return "Only JSON";
-            }
-        });
-        int option = fileChooser.showSaveDialog(this);
-        if (option == 0) {
-            File file;
-            if (fileChooser.getSelectedFile().getAbsolutePath().endsWith("json")) {
-                file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-            } else {
-                file = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".json");
-            }
-
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-            }
-
-            Gson gson = new GsonBuilder().registerTypeAdapter(Configurations.class, new ConfigurationsTypeAdapter()).create();
-
-            Writer writer = null;
-            try {
-                writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath(), new String[0]),
-                        new java.nio.file.OpenOption[0]);
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-            }
-
-            gson.toJson(this.conflist, writer);
-
-            try {
-                writer.close();
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-            }
-
-            originalConfigHash = calculateHash(conflist); 
-
-            this.currentFile = fileChooser.getSelectedFile();
-        }
+        fileService.saveFileAs(conflist);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        if (this.currentFile == null) {
-            jMenuItem3ActionPerformed(evt);
-        } else {
-            File file = new File(this.currentFile.toString());
-            Gson gson = new GsonBuilder().registerTypeAdapter(Configurations.class, new ConfigurationsTypeAdapter()).create();
-
-            Writer writer = null;
-            try {
-                writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath(), new String[0]),
-                        new java.nio.file.OpenOption[0]);
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-
-                return;
-            }
-            gson.toJson(this.conflist, writer);
-
-            try {
-                writer.close();
-            } catch (IOException ex) {
-
-                logger.log(Level.SEVERE, (Supplier<String>) ex);
-            }
-
-            originalConfigHash = calculateHash(conflist); 
-        }
+        fileService.saveFile(conflist);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        JFileChooser fileChooser = new JFileChooser(".");
-        fileChooser.setFileFilter(new FileFilter() {
-            public boolean accept(File f) {
-                if (f.getName().endsWith("json") || f.isDirectory()) {
-                    return true;
-                }
-                return false;
-            }
-
-            public String getDescription() {
-                return "Only JSON";
-            }
-        });
-        int option = fileChooser.showOpenDialog(this);
-        if (option == 0) {
-            File file = fileChooser.getSelectedFile();
-
-            try {
-                Gson gson = new GsonBuilder().registerTypeAdapter(Configurations.class, new ConfigurationsTypeAdapter()).create();
-                Reader reader = Files.newBufferedReader(file.toPath());
-                this.conflist = new ArrayList<>(
-                        Arrays.asList((Configurations[]) gson.fromJson(reader, Configurations[].class)));
-
-                originalConfigHash = calculateHash(conflist);
-
-                reader.close();
-                DefaultTableModel dtm = (DefaultTableModel) this.jTable2.getModel();
-                dtm.setRowCount(0);
-                OpenWasClicked();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+        conflist = fileService.openFile(conflist);
+        for (Configurations configurations : conflist) {
+            System.out.println(configurations.devices);
         }
-
+        DefaultTableModel dtm = (DefaultTableModel) this.jTable2.getModel();
+        dtm.setRowCount(0);
+        OpenWasClicked();
         updateTable();
-        this.currentFile = fileChooser.getSelectedFile();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -542,8 +458,6 @@ public class MyFrame extends javax.swing.JFrame {
             this.jButton2.setEnabled(false);
             this.jButton3.setEnabled(false);
             updateTable();
-        } else {
-            return;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -570,63 +484,8 @@ public class MyFrame extends javax.swing.JFrame {
                 }
             }
         }
-
-        List<String> logLines = new ArrayList<>();
-
-        try {
-            Scanner scanner = new Scanner(new File("logs.log"));
-            try {
-                while (scanner.hasNextLine()) {
-                    logLines.add(scanner.nextLine());
-                }
-                scanner.close();
-            } catch (Throwable throwable) {
-                try {
-                    scanner.close();
-                } catch (Throwable throwable1) {
-                    throwable.addSuppressed(throwable1);
-                }
-                throw throwable;
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, ex);
-        }
-
-        for (int i = 0; i < logLines.size(); i++) {
-            String line = logLines.get(i);
-            line = line.replace(((Configurations) this.conflist.get(this.rowindex)).title, nm);
-            logLines.set(i, line);
-        }
-        fileHandler.close();
-
-        try {
-            PrintWriter writer = new PrintWriter(new File("logs.log"));
-            try {
-                for (String line : logLines) {
-                    writer.println(line);
-                }
-                writer.close();
-            } catch (Throwable throwable) {
-                try {
-                    writer.close();
-                } catch (Throwable throwable1) {
-                    throwable.addSuppressed(throwable1);
-                }
-                throw throwable;
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, ex);
-        }
-
-        try {
-            fileHandler = new FileHandler("logs.log", true);
-            fileHandler.setFormatter(new SimpleFormatter());
-            logger.addHandler(fileHandler);
-        } catch (IOException ex) {
-            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
-        }
+        
+        logger.addHandler(logView.editLogs((FileHandler)fileHandler,((Configurations) this.conflist.get(this.rowindex)).title, nm));
 
         logger.log(Level.INFO, "Подсистема была переименована с '"
                 + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
@@ -646,7 +505,7 @@ public class MyFrame extends javax.swing.JFrame {
 
         Object[] options = {"Ok", "Cancel"};
 
-        int optionq = JOptionPane.showOptionDialog(
+        JOptionPane.showOptionDialog(
                 this,
                 devs,
                 "Устройства отключены",
@@ -660,35 +519,14 @@ public class MyFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    protected void processWindowEvent(WindowEvent we) {
-        if (we.getID() == 201) {
-            if (this.conflist.isEmpty() && originalConfigHash == null) {
-                scheduler.shutdown();
-                super.processWindowEvent(we);
-                return;
-            }
-            String currentHash = calculateHash(conflist);
-            if (this.currentFile == null || this.conflist.isEmpty() || !currentHash.equals(originalConfigHash)) {
-                int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
-                        "Подтверждение сохранения", 1);
-                if (option == 0) {
-                    jMenuItem1ActionPerformed(null);
-                } else if (option == 2) {
-                    return;
-                }
-            }
-            scheduler.shutdown();
-        }
-        super.processWindowEvent(we);
-    }
-
     public void changeTable(JTable table) {
         table.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                     boolean hasFocus,
                     int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (table.getColumnName(column) == "Подсистемы") {
+                if ("Подсистемы".equals(table.getColumnName(column))) {
                     table.setValueAt(((Configurations) MyFrame.this.conflist.get(row)).title, row, column);
                 } else {
                     c.setBackground(((Configurations) MyFrame.this.conflist.get(row)).condition);
@@ -733,12 +571,6 @@ public class MyFrame extends javax.swing.JFrame {
         }
     }
 
-    private String calculateHash(List<Configurations> configs) {
-        return Hashing.sha256()
-                .hashString(configs.toString(), StandardCharsets.UTF_8)
-                .toString();
-    }
-
     /**
      * @param args the command line arguments
      */
@@ -759,15 +591,11 @@ public class MyFrame extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
         }
+        // </editor-fold>
+
         // </editor-fold>
 
         /* Create and display the form */

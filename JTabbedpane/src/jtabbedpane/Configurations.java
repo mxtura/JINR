@@ -61,7 +61,8 @@ public class Configurations
         ((ArrayList<String>) this.devices.get(ind)).set(0, nm);
     }
 
-    public Configurations clone() {
+    @Override
+    public Configurations clone() throws CloneNotSupportedException {
         try {
             Configurations copy = (Configurations) super.clone();
             copy.devices = new ArrayList<>();
@@ -74,6 +75,7 @@ public class Configurations
         }
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -85,6 +87,7 @@ public class Configurations
         return (this.title.equals(that.title) && this.devices.equals(that.devices));
     }
 
+    @Override
     public int hashCode() {
         return Objects.hash(new Object[]{this.title, this.devices});
     }

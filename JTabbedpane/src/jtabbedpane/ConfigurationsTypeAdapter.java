@@ -54,12 +54,18 @@ public class ConfigurationsTypeAdapter extends TypeAdapter<Configurations> {
                         ArrayList<Object> innerList = new ArrayList<>();
                         while (in.hasNext()) {
                             String name = in.nextName();
-                            if (name.equals("name")) {
-                                innerList.add(in.nextString());
-                            } else if (name.equals("critical")) {
-                                innerList.add(in.nextBoolean());
-                            } else if (name.equals("logs_on")) {
-                                innerList.add(in.nextBoolean());
+                            switch (name) {
+                                case "name":
+                                    innerList.add(in.nextString());
+                                    break;
+                                case "critical":
+                                    innerList.add(in.nextBoolean());
+                                    break;
+                                case "logs_on":
+                                    innerList.add(in.nextBoolean());
+                                    break;
+                                default:
+                                    break;
                             }
                         }
                         innerList.add("no conn.");

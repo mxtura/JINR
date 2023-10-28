@@ -63,6 +63,7 @@ public class SystemPanel
         this.jTable1.setShowHorizontalLines(true);
 
         this.jTable1.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent evt) {
                 int row = SystemPanel.this.jTable1.rowAtPoint(evt.getPoint());
                 int col = SystemPanel.this.jTable1.columnAtPoint(evt.getPoint());
@@ -244,13 +245,14 @@ public class SystemPanel
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
     public void run() {
         CalcOfCondition();
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
 
             //System.out.println(this.jTable1.getModel().getValueAt(i,0) + " " + this.jTable1.getModel().getValueAt(i,2) + " " + CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] + " " + !((boolean)this.jTable1.getModel().getValueAt(i,4)));
             String old_state = (String) ((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).get(3);
-            if (old_state != CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] && !((boolean) this.jTable1.getModel().getValueAt(i, 4))) {
+            if ((old_state == null ? CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] != null : !old_state.equals(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1])) && !((boolean) this.jTable1.getModel().getValueAt(i, 4))) {
                 beepBeep((String) this.jTable1.getModel().getValueAt(i, 2), ((Configurations) this.conflist.get(this.index - 1)).title);
             }
             ((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).set(3, CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1]);
@@ -264,33 +266,21 @@ public class SystemPanel
     public class CheckBoxModelListener
             implements TableModelListener {
 
+        @Override
         public void tableChanged(TableModelEvent e) {
             int row = e.getFirstRow();
             int column = e.getColumn();
             if (column == 4) {
                 TableModel tmodel = (TableModel) e.getSource();
-                String columnName = tmodel.getColumnName(column);
                 Boolean checked = (Boolean) tmodel.getValueAt(row, column);
-                if (!checked.booleanValue()) {
-                    ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
-                            .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(false));
-                } else {
-                    ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
-                            .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, Boolean.valueOf(true));
-                }
+                ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
+                        .get(SystemPanel.this.index - 1)).devices.get(row)).set(1, checked);
             }
             if (column == 5) {
                 TableModel tmodel = (TableModel) e.getSource();
-                String columnName = tmodel.getColumnName(column);
                 Boolean checked = (Boolean) tmodel.getValueAt(row, column);
-                if (!checked.booleanValue()) {
-                    ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
-                            .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, Boolean.valueOf(false));
-                } else {
-                    ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
-                            .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, Boolean.valueOf(true));
-
-                }
+                ((ArrayList<Boolean>) ((Configurations) SystemPanel.this.conflist
+                        .get(SystemPanel.this.index - 1)).devices.get(row)).set(2, checked);
             }
         }
     }
@@ -321,10 +311,9 @@ public class SystemPanel
 
         try {
             Database db = new Database();
-            DeviceInfo deviceInfo = db.get_device_info(nm);
         } catch (DevFailed e) {
             Object[] options = {"Оставить", "Изменить", "Отмена"};
-            
+
             int n = JOptionPane.showOptionDialog(this, "Этого адреса нет в базе. Вы точно хотите ввести этот адрес?",
                     "Ошибка", 1, 3, null, options, options[2]);
 
@@ -335,7 +324,7 @@ public class SystemPanel
             if (n == 2) {
                 return;
             }
-            
+
         }
 
         ((Configurations) this.conflist.get(this.index - 1)).Add(nm);
@@ -397,13 +386,12 @@ public class SystemPanel
             loggit(Level.INFO, ((ArrayList<String>) ((Configurations) this.conflist.get(this.index - 1)).devices
                     .get(this.rowindex)).get(0), msg);
             ((Configurations) this.conflist.get(this.index - 1)).DeleteAd(this.rowindex);
-        } else {
-            return;
         }
     }
 
     private void changeTable(JTable table, int column_index) {
         table.getColumnModel().getColumn(column_index).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                     boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -429,8 +417,8 @@ public class SystemPanel
         String status = cha[0];
         String state = cha[1];
 
-        Object[] data = {nm, "", state, status, Boolean.valueOf(cr), Boolean.valueOf(lg)};
-        beepBeep(nm, ((Configurations) this.conflist.get(this.index - 1)).title);
+        Object[] data = {nm, "", state, status, cr, lg};
+        //beepBeep(nm, ((Configurations) this.conflist.get(this.index - 1)).title);
         ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).set(3, state);
         ((DefaultTableModel) this.model.get(this.index - 1)).addRow(data);
     }
@@ -551,7 +539,7 @@ public class SystemPanel
             } else {
                 red_count++;
 
-                if (((Boolean) this.jTable1.getValueAt(i, 4)).booleanValue() == true) {
+                if (((Boolean) this.jTable1.getValueAt(i, 4)) == true) {
                     if (((Configurations) this.conflist.get(this.index - 1)).condition != Color.RED) {
 
                     }
@@ -569,7 +557,6 @@ public class SystemPanel
         }
         if (red_count == red_flag) {
             ((Configurations) this.conflist.get(this.index - 1)).condition = Color.YELLOW;
-            return;
         }
     }
 

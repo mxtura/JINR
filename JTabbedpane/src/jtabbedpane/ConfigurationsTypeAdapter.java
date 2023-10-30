@@ -68,7 +68,6 @@ public class ConfigurationsTypeAdapter extends TypeAdapter<Configurations> {
                                     break;
                             }
                         }
-                        innerList.add("no conn.");
                         in.endObject();
                         devices.add(innerList);
                     }

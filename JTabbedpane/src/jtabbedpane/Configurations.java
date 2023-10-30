@@ -38,7 +38,6 @@ public class Configurations
         addressesArr.add(address);
         addressesArr.add(true);
         addressesArr.add(true);
-        addressesArr.add("no conn.");
         this.devices.add(addressesArr);
     }
 

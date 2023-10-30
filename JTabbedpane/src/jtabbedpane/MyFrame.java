@@ -399,9 +399,6 @@ public final class MyFrame extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         conflist = fileService.openFile(conflist);
-        for (Configurations configurations : conflist) {
-            System.out.println(configurations.devices);
-        }
         DefaultTableModel dtm = (DefaultTableModel) this.jTable2.getModel();
         dtm.setRowCount(0);
         OpenWasClicked();

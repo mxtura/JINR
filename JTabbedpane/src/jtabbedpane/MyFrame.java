@@ -83,6 +83,7 @@ public final class MyFrame extends javax.swing.JFrame {
             if (jCheckBoxMenuItem1.getState()) {
                 Toolkit.getDefaultToolkit().beep();
             }
+            System.out.println("111111");
         });
 
         fileService = new FileService(this);
@@ -327,9 +328,6 @@ public final class MyFrame extends javax.swing.JFrame {
     @Override
     protected void processWindowEvent(WindowEvent we) {
         if (we.getID() == WindowEvent.WINDOW_CLOSING) {
-            for (Configurations conf : conflist) {
-                System.out.println(conf.devices);
-            }
             if ((!(fileService.calculateHash(conflist)).equals(fileService.originalConfigHash) && fileService.originalConfigHash != null)) {
                 int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
                         "Подтверждение сохранения", 1);
@@ -405,9 +403,6 @@ public final class MyFrame extends javax.swing.JFrame {
         DefaultTableModel dtm = (DefaultTableModel) this.jTable2.getModel();
         dtm.setRowCount(0);
         OpenWasClicked();
-        for (Configurations conf : conflist){
-            System.out.println(conf.devices);
-        }
         updateTable();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -519,6 +514,10 @@ public final class MyFrame extends javax.swing.JFrame {
                 options[0]
         );
         jButton4.setEnabled(false);
+        
+        for (List beep : beepsLists) {
+            beep.clear();
+        }
 
     }//GEN-LAST:event_jButton4ActionPerformed
 

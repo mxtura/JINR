@@ -251,13 +251,9 @@ public class SystemPanel
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
             
             String old_state = (String) this.jTable1.getModel().getValueAt(i, 2);
-            //String old_state = (String) ((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).get(3);
-            //System.out.println(this.jTable1.getModel().getValueAt(i, 0) + " " + old_state + " " + CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1]);
-            //if ((old_state == null ? CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1] != null : !old_state.equals(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1])) && !((boolean) this.jTable1.getModel().getValueAt(i, 4)) && old_state.equals("ON")) {
             if (old_state.equals("ON") && !old_state.equals(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1]) && !((boolean) this.jTable1.getModel().getValueAt(i, 4))){
                 beepBeep((String) this.jTable1.getModel().getValueAt(i, 0), ((Configurations) this.conflist.get(this.index - 1)).title);
             }
-            //((Configurations) this.conflist.get(this.index - 1)).findDevice(this.jTable1.getModel().getValueAt(i, 0).toString()).set(3, CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1]);
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
                     i, 2);
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[0],
@@ -422,7 +418,6 @@ public class SystemPanel
         String state = cha[1];
 
         Object[] data = {nm, "", state, status, cr, lg};
-        ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).set(3, state);
         ((DefaultTableModel) this.model.get(this.index - 1)).addRow(data);
     }
 

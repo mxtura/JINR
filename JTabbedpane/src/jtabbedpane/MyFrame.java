@@ -44,6 +44,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Toolkit;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -65,7 +67,7 @@ public final class MyFrame extends javax.swing.JFrame {
     private static final Logger logger = Logger.getLogger(MyFrame.class.getName());
     private static Handler fileHandler;
 
-    private final List<List> beepsLists = new ArrayList<>();
+    private final Set<List> beepsLists = new HashSet<>();
 
     private FileService fileService;
     private LogView logView;
@@ -83,7 +85,6 @@ public final class MyFrame extends javax.swing.JFrame {
             if (jCheckBoxMenuItem1.getState()) {
                 Toolkit.getDefaultToolkit().beep();
             }
-            System.out.println("111111");
         });
 
         fileService = new FileService(this);
@@ -120,6 +121,12 @@ public final class MyFrame extends javax.swing.JFrame {
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                     MyFrame.this.jTabbedPane1.setSelectedIndex(row + 1);
                 }
+            }
+        });
+
+        jButton4.addPropertyChangeListener("enabled", evt -> {
+            if (jButton4.isEnabled()) {
+                System.out.println("1111");
             }
         });
 
@@ -514,7 +521,7 @@ public final class MyFrame extends javax.swing.JFrame {
                 options[0]
         );
         jButton4.setEnabled(false);
-        
+
         for (List beep : beepsLists) {
             beep.clear();
         }

@@ -251,7 +251,7 @@ public class SystemPanel
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
             
             String old_state = (String) this.jTable1.getModel().getValueAt(i, 2);
-            if (old_state.equals("ON") && !old_state.equals(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1]) && !((boolean) this.jTable1.getModel().getValueAt(i, 4))){
+            if (old_state.equals("ON") && !old_state.equals(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1]) && ((boolean) this.jTable1.getModel().getValueAt(i, 4))){
                 beepBeep((String) this.jTable1.getModel().getValueAt(i, 0), ((Configurations) this.conflist.get(this.index - 1)).title);
             }
             this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
@@ -456,7 +456,7 @@ public class SystemPanel
     }
 
     public void beepBeep(String dev, String ttl) {
-        beepList.add("Устройство " + dev + " в подсистеме " + ttl + " отключилось");
+        beepList.add("Проблемы с устройством " + dev + " в подсистеме " + ttl);
         SwingUtilities.invokeLater(() -> {
             MyFrame.getButton().setEnabled(true);
             MyFrame.setTimer(true);

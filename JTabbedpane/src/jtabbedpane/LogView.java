@@ -73,9 +73,10 @@ public class LogView extends JFrame {
             Scanner s = new Scanner(new File("logs.log"));
             try {
                 while (s.hasNextLine()) {
-                    String line = s.nextLine().substring(29);
-                    String finalLine = s.nextLine().substring(0, 29) + line;
-                    if (line.contains(subsystemName)) {
+                    String line = s.nextLine();
+                    String postLine = line.substring(29);
+                    String finalLine = line.substring(0, 29) + postLine;
+                    if (postLine.contains(subsystemName)) {
                         this.textArea1.append(finalLine + "\n");
                     }
                 }

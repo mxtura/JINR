@@ -67,7 +67,7 @@ public final class MyFrame extends javax.swing.JFrame {
     private static final Logger logger = Logger.getLogger(MyFrame.class.getName());
     private static Handler fileHandler;
 
-    private final Set<Set<String>> beepsLists = new HashSet<>();
+    private final List<Set<String>> beepsLists = new ArrayList<>();
 
     private FileService fileService;
     private LogView logView;
@@ -126,7 +126,9 @@ public final class MyFrame extends javax.swing.JFrame {
 
         jButton4.addPropertyChangeListener("enabled", evt -> {
             if (jButton4.isEnabled()) {
-                System.out.println("1111");
+                timer.start();
+            } else {
+                timer.stop();
             }
         });
 
@@ -501,7 +503,8 @@ public final class MyFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String devs = "";
-        for (Set beep : beepsLists) {
+
+        for (Set<String> beep : beepsLists) {
             for (Object str : beep) {
                 devs += str + "\n";
             }
@@ -522,7 +525,7 @@ public final class MyFrame extends javax.swing.JFrame {
         );
         jButton4.setEnabled(false);
 
-        for (Set beep : beepsLists) {
+        for (Set<String> beep : beepsLists) {
             beep.clear();
         }
 

@@ -461,7 +461,6 @@ public class SystemPanel
         beepList.add("Проблемы с устройством " + dev + " в подсистеме " + ttl);
         SwingUtilities.invokeLater(() -> {
             MyFrame.getButton().setEnabled(true);
-            MyFrame.setTimer(true);
         });
 
     }

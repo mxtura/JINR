@@ -7,7 +7,6 @@ package jtabbedpane;
 
 import fr.esrf.Tango.DevFailed;
 import fr.esrf.TangoApi.Database;
-import fr.esrf.TangoApi.DeviceInfo;
 import fr.esrf.TangoApi.DeviceProxy;
 import java.awt.Color;
 import java.awt.Component;
@@ -27,7 +26,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import java.awt.Toolkit;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JFrame;

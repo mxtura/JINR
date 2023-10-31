@@ -81,7 +81,7 @@ public final class MyFrame extends javax.swing.JFrame {
     public MyFrame() throws IOException {
         initComponents();
 
-        timer = new Timer(2000, e -> {
+        timer = new Timer(10000, e -> {
             if (jCheckBoxMenuItem1.getState()) {
                 Toolkit.getDefaultToolkit().beep();
             }

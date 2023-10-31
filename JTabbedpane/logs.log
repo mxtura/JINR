@@ -345,3 +345,75 @@
 2023-10-31 15:41:07 [INFO   ] jtabbedpane.MyFrame - Start 
 2023-10-31 15:44:20 [INFO   ] jtabbedpane.MyFrame - Start 
 2023-10-31 15:46:08 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-31 15:51:44 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-31 18:09:33 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-31 18:10:19 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-31 18:10:32 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' на 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' 
+2023-10-31 18:10:32 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1h' изменился статус c 'Corrector connected!' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:10:36 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' на 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' 
+2023-10-31 18:10:36 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s3h' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector connected!' 
+2023-10-31 18:10:40 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' на 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' 
+2023-10-31 18:10:40 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1h' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector connected!' 
+2023-10-31 18:10:40 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1v' изменился статус c 'Corrector connected!' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:10:41 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s3v' изменился статус c 'Corrector connected!' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:10:48 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' на 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' 
+2023-10-31 18:10:53 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1v' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector connected!' 
+2023-10-31 18:10:56 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' на 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' 
+2023-10-31 18:10:56 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s3h' изменился статус c 'Corrector connected!' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:11:00 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1h' изменился статус c 'Corrector connected!' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:11:04 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' на 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' 
+2023-10-31 18:11:04 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s3h' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector connected!' 
+2023-10-31 18:11:12 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' на 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' 
+2023-10-31 18:11:12 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1v' изменился статус c 'Corrector connected!' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_CallTimedout' 
+2023-10-31 18:11:16 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' на 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' 
+2023-10-31 18:11:16 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1v' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_CallTimedout' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:11:21 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1v' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector connected!' 
+2023-10-31 18:11:24 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s2h' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_CallTimedout' 
+2023-10-31 18:11:24 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s3h' изменился статус c 'Corrector connected!' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:11:28 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' на 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' 
+2023-10-31 18:11:28 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s2h' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_CallTimedout' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:11:29 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s3v' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector connected!' 
+2023-10-31 18:11:32 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' на 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' 
+2023-10-31 18:11:36 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' на 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' 
+2023-10-31 18:18:14 [INFO   ] jtabbedpane.MyFrame - Start 
+2023-10-31 18:18:26 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' на 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' 
+2023-10-31 18:18:30 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s2v' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_CallTimedout' 
+2023-10-31 18:18:34 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s2h' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_CallTimedout' 
+2023-10-31 18:18:34 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s2v' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_CallTimedout' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:18:38 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1h' изменилось состояние c 'ON' на 'FAULT' 
+2023-10-31 18:18:38 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1h' изменился статус c 'Corrector connected!' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:18:38 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s2h' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_CallTimedout' на 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' 
+2023-10-31 18:18:42 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' на 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' 
+2023-10-31 18:18:42 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1h' изменилось состояние c 'FAULT' на 'ON' 
+2023-10-31 18:18:42 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s1h' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector connected!' 
+2023-10-31 18:18:42 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s3v' изменилось состояние c 'FAULT' на 'ON' 
+2023-10-31 18:18:42 [INFO   ] jtabbedpane.MyFrame - У устройства 'booster/correctors/corr.2s3v' изменился статус c 'Corrector thread exception: TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed' на 'Corrector connected!' 
+2023-10-31 18:18:46 [INFO   ] jtabbedpane.MyFrame - У устройства 'diagnostics/websocket/bergozframe1' изменился статус c 'Failed to connect to device diagnostics/bergozframecollector/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago' на 'TRANSIENT CORBA system exception: TRANSIENT_CallTimedout Failed to connect to device diagnostics/bergozframecollector/1' 

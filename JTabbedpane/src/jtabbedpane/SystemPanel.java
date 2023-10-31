@@ -250,21 +250,37 @@ public class SystemPanel
     @Override
     public void run() {
         CalcOfCondition();
+        updateTable();
+    }
+   
+    private void updateTable(){
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
-            
+            String nm = this.jTable1.getModel().getValueAt(i, 0).toString();
             String old_state = (String) this.jTable1.getModel().getValueAt(i, 2);
-            if (old_state.equals("ON") && !old_state.equals(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1]) && ((boolean) this.jTable1.getModel().getValueAt(i, 4))){
+            String old_status = (String) this.jTable1.getModel().getValueAt(i, 3);
+            String new_state = CheckingAdress(nm)[1];
+            String new_status = CheckingAdress(nm)[0];
+            if (old_state.equals("ON") && !old_state.equals(new_state) && ((boolean) this.jTable1.getModel().getValueAt(i, 4))){
                 beepBeep((String) this.jTable1.getModel().getValueAt(i, 0), ((Configurations) this.conflist.get(this.index - 1)).title);
             }
-            this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[1],
+            if (old_state != "" && !old_state.equals(new_state)){
+                String msg = "У устройства '" + nm
+                            + "' изменилось состояние c '" + old_state + "' на '" + new_state + "'";
+                    loggit(Level.INFO, nm, msg);
+            }
+            if (old_status != "" && !old_status.equals(new_status)){
+                String msg = "У устройства '" + nm
+                            + "' изменился статус c '" + old_status + "' на '" + new_status + "'";
+                    loggit(Level.INFO, nm, msg);
+            }
+            this.jTable1.getModel().setValueAt(new_state,
                     i, 2);
-            this.jTable1.getModel().setValueAt(CheckingAdress(this.jTable1.getModel().getValueAt(i, 0).toString())[0],
+            this.jTable1.getModel().setValueAt(new_status,
                     i, 3);
         }
         
         ((DefaultTableModel) this.jTable1.getModel()).fireTableDataChanged();
     }
-   
     public class CheckBoxModelListener
             implements TableModelListener {
 

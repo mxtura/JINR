@@ -28,6 +28,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.Toolkit;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -44,7 +46,7 @@ public class SystemPanel
     List<Configurations> conflist;
     ArrayList<DefaultTableModel> model;
     private Logger logger;
-    public List<String> beepList = new ArrayList<>();
+    public Set<String> beepList = new HashSet<>();
 
     public SystemPanel(List<Configurations> conflist, ArrayList<DefaultTableModel> model, Logger logger) {
         initComponents();

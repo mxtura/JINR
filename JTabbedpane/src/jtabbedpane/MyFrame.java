@@ -67,7 +67,7 @@ public final class MyFrame extends javax.swing.JFrame {
     private static final Logger logger = Logger.getLogger(MyFrame.class.getName());
     private static Handler fileHandler;
 
-    private final Set<List> beepsLists = new HashSet<>();
+    private final Set<Set<String>> beepsLists = new HashSet<>();
 
     private FileService fileService;
     private LogView logView;
@@ -501,7 +501,7 @@ public final class MyFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String devs = "";
-        for (List beep : beepsLists) {
+        for (Set beep : beepsLists) {
             for (Object str : beep) {
                 devs += str + "\n";
             }
@@ -522,7 +522,7 @@ public final class MyFrame extends javax.swing.JFrame {
         );
         jButton4.setEnabled(false);
 
-        for (List beep : beepsLists) {
+        for (Set beep : beepsLists) {
             beep.clear();
         }
 

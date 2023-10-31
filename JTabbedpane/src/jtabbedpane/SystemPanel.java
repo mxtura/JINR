@@ -57,8 +57,6 @@ public class SystemPanel
 
         model.add((DefaultTableModel) this.jTable1.getModel());
 
-        this.index = this.index;
-
         this.jTable1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         this.jTable1.setShowVerticalLines(true);
@@ -252,35 +250,36 @@ public class SystemPanel
         CalcOfCondition();
         updateTable();
     }
-   
-    private void updateTable(){
+
+    private void updateTable() {
         for (int i = 0; i < this.jTable1.getModel().getRowCount(); i++) {
             String nm = this.jTable1.getModel().getValueAt(i, 0).toString();
             String old_state = (String) this.jTable1.getModel().getValueAt(i, 2);
             String old_status = (String) this.jTable1.getModel().getValueAt(i, 3);
             String new_state = CheckingAdress(nm)[1];
             String new_status = CheckingAdress(nm)[0];
-            if (old_state.equals("ON") && !old_state.equals(new_state) && ((boolean) this.jTable1.getModel().getValueAt(i, 4))){
+            if (old_state.equals("ON") && !old_state.equals(new_state) && ((boolean) this.jTable1.getModel().getValueAt(i, 4))) {
                 beepBeep((String) this.jTable1.getModel().getValueAt(i, 0), ((Configurations) this.conflist.get(this.index - 1)).title);
             }
-            if (old_state != "" && !old_state.equals(new_state)){
+            if (old_state != "" && !old_state.equals(new_state)) {
                 String msg = "У устройства '" + nm
-                            + "' изменилось состояние c '" + old_state + "' на '" + new_state + "'";
-                    loggit(Level.INFO, nm, msg);
+                        + "' изменилось состояние c '" + old_state + "' на '" + new_state + "'";
+                loggit(Level.INFO, nm, msg);
             }
-            if (old_status != "" && !old_status.equals(new_status)){
+            if (old_status != "" && !old_status.equals(new_status)) {
                 String msg = "У устройства '" + nm
-                            + "' изменился статус c '" + old_status + "' на '" + new_status + "'";
-                    loggit(Level.INFO, nm, msg);
+                        + "' изменился статус c '" + old_status + "' на '" + new_status + "'";
+                loggit(Level.INFO, nm, msg);
             }
             this.jTable1.getModel().setValueAt(new_state,
                     i, 2);
             this.jTable1.getModel().setValueAt(new_status,
                     i, 3);
         }
-        
+
         ((DefaultTableModel) this.jTable1.getModel()).fireTableDataChanged();
     }
+
     public class CheckBoxModelListener
             implements TableModelListener {
 
@@ -347,8 +346,7 @@ public class SystemPanel
 
         ((Configurations) this.conflist.get(this.index - 1)).Add(nm);
         CreatingAddresses(nm, true, true);
-        String msg = "Добавлено новое устройство '" + nm + "' в подсистему '"
-                + ((Configurations) this.conflist.get(this.index - 1)).title + "'";
+        String msg = "Добавлено новое устройство '" + nm + "'";
         loggit(Level.INFO, nm, msg);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -377,8 +375,7 @@ public class SystemPanel
             }
         }
 
-        String msg = "Устройство '" + dm.getValueAt(this.rowindex, 0) + "' в подсистеме '"
-                + ((Configurations) this.conflist.get(this.index - 1)).title + "' было изменено на '" + nm + "'";
+        String msg = "Устройство '" + dm.getValueAt(this.rowindex, 0) + "' было изменено на '" + nm + "'";
         loggit(Level.INFO, (String) dm.getValueAt(this.rowindex, 0), msg);
 
         ChangingAdress(dm, nm);
@@ -399,8 +396,7 @@ public class SystemPanel
             ((DefaultTableModel) this.jTable1.getModel()).removeRow(this.rowindex);
             String msg = "Удалено устройство '"
                     + ((ArrayList<String>) ((Configurations) this.conflist.get(this.index - 1)).devices
-                            .get(this.rowindex)).get(0)
-                    + "' из подсистемы '" + ((Configurations) this.conflist.get(this.index - 1)).title + "'";
+                            .get(this.rowindex)).get(0) + "'";
             loggit(Level.INFO, ((ArrayList<String>) ((Configurations) this.conflist.get(this.index - 1)).devices
                     .get(this.rowindex)).get(0), msg);
             ((Configurations) this.conflist.get(this.index - 1)).DeleteAd(this.rowindex);
@@ -426,7 +422,7 @@ public class SystemPanel
 
     private void loggit(Level lv, String nm, String msg) {
         if ((boolean) ((Configurations) this.conflist.get(this.index - 1)).findDevice(nm).get(2)) {
-            this.logger.log(lv, msg);
+            this.logger.log(lv, "TANGO/" + ((Configurations) this.conflist.get(this.index - 1)).title + " - " + msg);
         }
     }
 
@@ -452,18 +448,8 @@ public class SystemPanel
         } catch (DevFailed e) {
 
             if (dev != null) {
-                if (status != "Нет связи с устройством" && status != "") {
-                    String msg = "У устройства '" + nm
-                            + "' изменился статус c 'Нет связи с устройством' на '" + status + "'";
-                    loggit(Level.INFO, nm, msg);
-                }
                 status = "Нет связи с устройством";
             } else {
-                if (status != "Нет устройства с таким адресом" && status != "") {
-                    String msg = "У устройства '" + nm
-                            + "' изменился статус c 'Нет устройства с таким адресом' на '" + status + "'";
-                    loggit(Level.INFO, nm, msg);
-                }
                 status = "Нет устройства с таким адресом";
             }
 
@@ -486,7 +472,6 @@ public class SystemPanel
 
         try {
             dev = new DeviceProxy(nm);
-
             dm.setValueAt(dev.state(), this.rowindex, 2);
             dm.setValueAt(dev.status(), this.rowindex, 3);
         } catch (DevFailed e) {
@@ -513,7 +498,6 @@ public class SystemPanel
                         return;
                     }
                 }
-
             }
         }
         ((Configurations) this.conflist.get(this.index - 1)).ChangeNameAd(this.rowindex, nm);

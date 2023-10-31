@@ -73,9 +73,10 @@ public class LogView extends JFrame {
             Scanner s = new Scanner(new File("logs.log"));
             try {
                 while (s.hasNextLine()) {
-                    String line = s.nextLine();
+                    String line = s.nextLine().substring(29);
+                    String finalLine = s.nextLine().substring(0, 29) + line;
                     if (line.contains(subsystemName)) {
-                        this.textArea1.append(line + "\n");
+                        this.textArea1.append(finalLine + "\n");
                     }
                 }
 
@@ -89,6 +90,7 @@ public class LogView extends JFrame {
                 throw throwable;
             }
         } catch (IOException iOException) {
+            Logger.getLogger(SystemPanel.class.getName()).log(Level.SEVERE, (String) null, iOException);
         }
     }
 
@@ -115,9 +117,10 @@ public class LogView extends JFrame {
         }
 
         for (int i = 0; i < logLines.size(); i++) {
-            String line = logLines.get(i);
-            line = line.replace(oldName,newName);
-            logLines.set(i, line);
+            String line = logLines.get(i).substring(29);
+            line = line.replace(oldName, newName);
+            String finalLine = logLines.get(i).substring(0, 29) + line;
+            logLines.set(i, finalLine);
         }
         fileHandler.close();
 
@@ -143,13 +146,13 @@ public class LogView extends JFrame {
         try {
             fileHandler = new FileHandler("logs.log", true);
             fileHandler.setFormatter(new SimpleFormatter());
-            
+
         } catch (IOException ex) {
             Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
         } catch (SecurityException ex) {
             Logger.getLogger(MyFrame.class.getName()).log(Level.SEVERE, (String) null, ex);
         }
-        
+
         return fileHandler;
     }
 

@@ -75,7 +75,7 @@ public final class MyFrame extends javax.swing.JFrame {
     public static Timer timer;
 
     static {
-        System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF %1$tT [%4$-7s] %3$s - %5$s %n");
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF | %1$tT | %5$s %n");
     }
 
     public MyFrame() throws IOException {
@@ -95,7 +95,7 @@ public final class MyFrame extends javax.swing.JFrame {
         logger.addHandler(fileHandler);
 
         logger.setLevel(Level.ALL);
-        logger.info("Start");
+        logger.info("TANGO - Start");
         this.md = (DefaultTableModel) this.jTable2.getModel();
         this.jTable2.addMouseListener(new MouseAdapter() {
             @Override
@@ -337,7 +337,7 @@ public final class MyFrame extends javax.swing.JFrame {
     @Override
     protected void processWindowEvent(WindowEvent we) {
         if (we.getID() == WindowEvent.WINDOW_CLOSING) {
-            if ((!(fileService.calculateHash(conflist)).equals(fileService.originalConfigHash) && fileService.originalConfigHash != null)) {
+            if ((!(fileService.calculateHash(conflist)).equals(fileService.originalConfigHash) && fileService.originalConfigHash != null) || (fileService.originalConfigHash == null && !conflist.isEmpty())) {
                 int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
                         "Подтверждение сохранения", 1);
                 if (option == 0) {
@@ -384,7 +384,7 @@ public final class MyFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        if ((!(fileService.calculateHash(conflist)).equals(fileService.originalConfigHash) && fileService.originalConfigHash != null)) {
+        if ((!(fileService.calculateHash(conflist)).equals(fileService.originalConfigHash) && fileService.originalConfigHash != null) || (fileService.originalConfigHash == null && !conflist.isEmpty())) {
             int option = JOptionPane.showConfirmDialog(this, "Файл не был сохранен. Вы хотите сохранить файл?",
                     "Подтверждение сохранения", 1);
             if (option == 0) {
@@ -451,7 +451,7 @@ public final class MyFrame extends javax.swing.JFrame {
         sp.index = this.jTabbedPane1.getSelectedIndex();
         scheduler.scheduleAtFixedRate(sp, 0L, deviceCheckInterval, TimeUnit.SECONDS);
         updateTable();
-        logger.log(Level.INFO, "Была создана новая подсистема " + nm);
+        logger.log(Level.INFO, "TANGO - Была создана новая подсистема " + nm);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -459,7 +459,7 @@ public final class MyFrame extends javax.swing.JFrame {
         if (res == 0) {
             this.jTabbedPane1.removeTabAt(this.rowindex + 1);
             logger.log(Level.INFO,
-                    "Была удалена подсистема " + ((Configurations) this.conflist.get(this.rowindex)).title);
+                    "TANGO - Была удалена подсистема " + ((Configurations) this.conflist.get(this.rowindex)).title);
             this.conflist.remove(this.rowindex);
             this.md.removeRow(this.rowindex);
             this.jButton2.setEnabled(false);
@@ -494,7 +494,7 @@ public final class MyFrame extends javax.swing.JFrame {
 
         logger.addHandler(logView.editLogs((FileHandler) fileHandler, ((Configurations) this.conflist.get(this.rowindex)).title, nm));
 
-        logger.log(Level.INFO, "Подсистема была переименована с '"
+        logger.log(Level.INFO, "TANGO - Подсистема была переименована с '"
                 + ((Configurations) this.conflist.get(this.rowindex)).title + "' на '" + nm + "'");
         ((Configurations) this.conflist.get(this.rowindex)).title = nm;
         this.jTabbedPane1.setTitleAt(this.rowindex + 1, nm);
